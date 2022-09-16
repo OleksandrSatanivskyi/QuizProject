@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject
 {
-    public class SectionEditor: CommandManager
+    public class SectionManager: CommandManager
     {
-        public SectionEditor(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
+        public SectionManager(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
         {
            this.Sections = Sections;
             this.Subsections = Subsections;

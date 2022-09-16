@@ -11,7 +11,7 @@ namespace QuizProject
     public class Section
     {
         public string Name { get; private set; }
-        public int Id;
+        public int Id { get; private set; }
         private static int Count=0;
         public Section():this("Section") 
         {
@@ -26,12 +26,11 @@ namespace QuizProject
         }
         public override string ToString()
         {
-            return $"{Name}\n\tId: {Id}";
+            return $"{Name}" +
+                $"\n\tId: {Id}";
         }
 
         internal void Rename(string newName)
-        {
-            Name = newName;
-        }
+            => Name = newName;
     }
 }

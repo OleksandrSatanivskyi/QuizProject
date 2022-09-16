@@ -8,14 +8,14 @@ namespace QuizProject.Running
 {
     public class MainManager : CommandManager
     {
-        DataContext dataContext = new DataContext();
-        DataEditor dataEditor;
-        TextEditor textEditor;
+        private DataContext dataContext = new DataContext();
+        private DataManager dataManager { get; set; }
+        private TextManager textManager { get; set; }
         public MainManager()
         {
             dataContext.Load();
-            dataEditor = new DataEditor(dataContext);
-            textEditor = new TextEditor(dataContext);
+            dataManager = new DataManager(dataContext);
+            textManager = new TextManager(dataContext);
         }
         private bool IfDataContextNotEmpty() { return !dataContext.Sections.Any(); }
         private bool IfDataContextEmpty() { return dataContext.Sections.Any(); }
@@ -39,13 +39,11 @@ namespace QuizProject.Running
 
         private void EditData()
         {
-            dataEditor.Run();
+            dataManager.Run();
         }
         private void DataAsText()
         {
-            textEditor.Run();
-            //Console.WriteLine(dataContext);
-            //Console.ReadKey(true);
+            textManager.Run();
         }
         private void CreateTestingdata()
         {

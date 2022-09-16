@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace QuizProject
 {
-    public class QuizEditor : CommandManager
+    public class QuizManager : CommandManager
     {
   
-        public QuizEditor(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
+        public QuizManager(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
         {
             this.Sections = Sections;
             this.Subsections = Subsections;

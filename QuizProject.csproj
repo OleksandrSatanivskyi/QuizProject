@@ -44,23 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Running\DataEditor.cs" />
     <Compile Include="DataSet.cs" />
+    <Compile Include="Running\DataManager.cs" />
     <Compile Include="EnumerableMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quiz.cs" />
-    <Compile Include="Running\QuizEditor.cs" />
+    <Compile Include="Data\Quiz.cs" />
+    <Compile Include="Running\QuizManager.cs" />
     <Compile Include="Running\CommandInfo.cs" />
     <Compile Include="Running\CommandManager.cs" />
     <Compile Include="Running\Entering.cs" />
     <Compile Include="Running\MainManager.cs" />
-    <Compile Include="Running\TextEditor.cs" />
-    <Compile Include="Section.cs" />
-    <Compile Include="Running\SectionEditor.cs" />
-    <Compile Include="Subsection.cs" />
-    <Compile Include="Running\SubsectionEditor.cs" />
-    <Compile Include="Task.cs" />
+    <Compile Include="Running\TextManager.cs" />
+    <Compile Include="Data\Section.cs" />
+    <Compile Include="Running\SectionManager.cs" />
+    <Compile Include="Data\Subsection.cs" />
+    <Compile Include="Running\SubsectionManager.cs" />
+    <Compile Include="Data\Task.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
