@@ -109,7 +109,7 @@ namespace QuizProject
         }
         public void Save() 
         { 
-        BinaryFormatter bFormatter= new BinaryFormatter();
+            BinaryFormatter bFormatter= new BinaryFormatter();
             using (FileStream fstream=new FileStream(FileName, FileMode.Create,
                 FileAccess.Write, FileShare.None)) 
             bFormatter.Serialize(fstream, dataSet);

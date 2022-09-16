@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject
 {
-    public class SubsectionEditor: CommandManager
+    public class SubsectionManager: CommandManager
     {
-        public SubsectionEditor(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
+        public SubsectionManager(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
         {
             this.Sections = Sections;
             this.Subsections = Subsections;
@@ -50,38 +50,21 @@ namespace QuizProject
         }
         public void DeleteSubsection()
         {
-            Section s = null;
-            bool checkSection = false;
-            bool checkSubsection = false;
-            Console.WriteLine("Введіть ім'я підрозділу");
-            string subsectionName = Console.ReadLine();
             Console.WriteLine("Введіть ім'я розділу, до якого належить підрозділ");
             string sectionName = Console.ReadLine();
-            foreach (var section in Sections)
+            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+
+            Console.WriteLine("Введіть ім'я підрозділу");
+            string subsectionName = Console.ReadLine();
+            var subsection = Subsections.SingleOrDefault(s => s.Name == subsectionName && s.Section == section);
+
+            if (subsection == null)
+                Console.WriteLine("Помилка");
+            else
             {
-                if (section.Name == sectionName)
-                {
-                    s = section;
-                    checkSection = true;
-                    foreach (var subsection in Subsections)
-                    {
-                        if (subsection.Name == subsectionName)
-                        {
-                            checkSubsection = true;
-                            Subsections.Remove(subsection);
-                            break;
-                        }
-                    }
-                }
-            }
-            if (checkSection == true && checkSubsection == true)
-            {
+                Subsections.Remove(subsection);
                 Console.WriteLine("Підрозділ був успішно видалений");
             }
-            else
-                Console.WriteLine("Помилка");
-            Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-            Console.ReadKey(true);
         }
         protected override void IniCommandsInfo()
         {

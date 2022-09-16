@@ -10,7 +10,7 @@ namespace QuizProject
     public class Quiz
     {
         public string Name { get; private set; }
-        public int Id;
+        public int Id { get; private set; }
         public Section Section { get; private set; }
         public Subsection Subsection { get; private set; }
         public List<Task> Tasks { get; }
@@ -32,30 +32,27 @@ namespace QuizProject
         public Task GetTask(string name) 
         {
             foreach (Task t in Tasks)
-            {
                 if (t.Name == name)
                     return t;
-            }
             throw new Exception("Your task was not found");
         }
         public Task GetTask(int Id)
         {
             foreach (Task t in Tasks)
-            {
                 if (t.Id == Id)
                     return t;
-            }
             throw new Exception("Your task was not found");
         }
         public override string ToString()
         {
-            return $"{Name}\n\tId: {Id}\n\tРозділ: {Section.Name}\n\tПідрозділ: {Subsection.Name}";
+            return $"{Name}\n\tId: {Id}" +
+                $"\n\tРозділ: {Section.Name}" +
+                $"\n\tПідрозділ: {Subsection.Name}";
         }
 
         public void Rename(string newName)
-        {
-            Name= newName;
-        }
+            => Name = newName;
+        
 
         public void ChangeLocation(Section newSection, Subsection newSubsection)
         {

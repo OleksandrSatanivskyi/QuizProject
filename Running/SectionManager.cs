@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject
 {
-    public class SectionEditor: CommandManager
+    public class SectionManager: CommandManager
     {
-        public SectionEditor(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
+        public SectionManager(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
         {
            this.Sections = Sections;
             this.Subsections = Subsections;
@@ -18,32 +18,17 @@ namespace QuizProject
         }
         public void DeleteSection()
         {
-            Console.WriteLine("Введіть ім'я розділу");
+             Console.WriteLine("Введіть ім'я розділу");
             string name = Console.ReadLine();
-            bool check = true;
-            foreach (var section in Sections)
-            {
-                if (section.Name == name)
-                {
-                    foreach (var subs in Subsections)
-                        if (subs.Section == section)
-                            check = false;
-                    if (check == false)
-                    {
-                        Console.WriteLine("Помилка");
-                    }
-                    else
-                    {
-                        Section s = section;
-                        Sections.Remove(section);
-                        Console.WriteLine("Розділ був успішно видалений");
-                    }
-                    break;
-                }
-            }
+            var section = Sections.SingleOrDefault(s => s.Name == name);
 
-            Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-            Console.ReadKey(true);
+            if (section == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Sections.Remove(section);
+                Console.WriteLine("Розділ був успішно видалений");
+            }
         }
 
         public void CreateSection()

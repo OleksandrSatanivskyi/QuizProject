@@ -32,9 +32,7 @@ namespace QuizProject.Running
                 ShowMenu();
                 CommandInfo commandInfo = SelectCommandInfo();
                 if (commandInfo.Command == null)
-                {
                     return;
-                }
                 commandInfo.Command();
             }
         }

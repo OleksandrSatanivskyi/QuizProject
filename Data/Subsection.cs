@@ -10,7 +10,7 @@ namespace QuizProject
     public class Subsection
     {
         public string Name { get; private set; }
-        public int Id;
+        public int Id { get; private set; }
         public Section Section { get; private set; }
         private static int Count = 0;
         public Subsection(string Name, Section Section) 

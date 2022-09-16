@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace QuizProject
 {
-    public class DataEditor : CommandManager
+    public class DataManager : CommandManager
     {
-        SubsectionEditor subsectionEditor;
-        SectionEditor sectionEditor;
-        QuizEditor quizEdutor;
-        public DataEditor(DataContext dataContext) 
+        SubsectionManager subsectionEditor;
+        SectionManager sectionEditor;
+        QuizManager quizEdutor;
+        public DataManager(DataContext dataContext) 
         {
             Sections=dataContext.Sections;
             Subsections=dataContext.Subsections;
             Quizzes=dataContext.Quizzes;
-            subsectionEditor = new SubsectionEditor(Sections, Subsections, Quizzes);
-            sectionEditor = new SectionEditor(Sections, Subsections, Quizzes);
-            quizEdutor = new QuizEditor(Sections, Subsections, Quizzes);
+            subsectionEditor = new SubsectionManager(Sections, Subsections, Quizzes);
+            sectionEditor = new SectionManager(Sections, Subsections, Quizzes);
+            quizEdutor = new QuizManager(Sections, Subsections, Quizzes);
 
 
 

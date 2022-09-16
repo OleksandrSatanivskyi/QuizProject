@@ -10,10 +10,10 @@ namespace QuizProject
     public struct Task
     {
         public string Name { get; private set; }
-        public int Id;
+        public int Id { get; private set; }
         public string Question { get; private set; }
-        public List<string> AnswerOptions;
-        public string TrueAnswer { get; private set; }
+        public List<string> AnswerOptions { get; private set; }
+        public string CorrectAnswer { get; private set; }
         private static int Count = 0;
         public Task(string Name, string Question,string Answer,params string[] Options) 
         {
@@ -21,7 +21,7 @@ namespace QuizProject
             Id = Count;
             this.Name = Name;
             this.Question = Question;
-            this.TrueAnswer= Answer;
+            this.CorrectAnswer= Answer;
             this.AnswerOptions = new List<string>();
             this.AnswerOptions.AddRange(Options);
             Random rand = new Random();
@@ -35,7 +35,7 @@ namespace QuizProject
         }
         public void EditOptions(string answer, params string[] Options) 
         {
-        TrueAnswer=answer;
+        CorrectAnswer=answer;
             AnswerOptions = new List<string>();
             AnswerOptions.AddRange(Options);
         }

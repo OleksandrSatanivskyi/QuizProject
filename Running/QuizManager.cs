@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace QuizProject
 {
-    public class QuizEditor : CommandManager
+    public class QuizManager : CommandManager
     {
   
-        public QuizEditor(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
+        public QuizManager(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
         {
             this.Sections = Sections;
             this.Subsections = Subsections;
@@ -235,44 +235,27 @@ namespace QuizProject
         }
         private void DeleteQuiz()
         {
+             Console.WriteLine("Введіть ім'я розділу, до якого належить вікторина");
+            string sectionName = Console.ReadLine();
+            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+
+            Console.WriteLine("Введіть ім'я підрозділу, до якого належить вікторина");
+            string subsectionName = Console.ReadLine();
+            var subsection = Subsections.SingleOrDefault(s => s.Name == subsectionName && s.Section == section);
+
             Console.WriteLine("Введіть ім'я вікторини");
             string quizName = Console.ReadLine();
-            Console.WriteLine("Введіть розділ");
-            string sectionName = Console.ReadLine();
-            Console.WriteLine("Введіть підрозділ");
-            string subsectionName = Console.ReadLine();
-            bool checkQuiz = false;
-            foreach (var section in Sections)
-            {
-                if (section.Name == sectionName)
-                {
-                    foreach (var subsection in Subsections)
-                    {
-                        if (subsection.Name == subsectionName)
-                        {
-                            foreach (var quiz in Quizzes)
-                            {
-                                if (quizName == quiz.Name)
-                                {
-                                    Quizzes.Remove(quiz);
-                                    checkQuiz = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (checkQuiz == true)
-            {
-                Console.WriteLine("Вікторина успішно видалена");
-            }
+            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+                                              && q.Section == section
+                                              && q.Subsection == subsection);
+
+            if (quiz == null)
+                Console.WriteLine("Помилка");
             else
             {
-                Console.WriteLine("Помилка");
+                Subsections.Remove(subsection);
+                Console.WriteLine("Вікторина була успішно видалена");
             }
-            Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-            Console.ReadKey(true);
         }
         public void CreateQuiz()
         {
