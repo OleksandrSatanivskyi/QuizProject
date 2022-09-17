@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuizProject
 {
-    public class SectionManager: CommandManager
+    public class SectionManager: CommandManager, IObjectManager<Section>
     {
         public SectionManager(List<Section> Sections, List<Quiz> Quizzes)
         {
@@ -15,7 +15,41 @@ namespace QuizProject
             this.Quizzes = Quizzes;
             IniCommandsInfo();
         }
-        public void DeleteSection()
+
+        public void CreateObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        private Section GetObject(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RenameObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void IniCommandsInfo()
+        {
+            commandsInfo = new CommandInfo[] {
+                new CommandInfo("назад", null, AllwaysDisplay),
+                 new CommandInfo("створити розділ", CreateObject, AllwaysDisplay),
+                new CommandInfo("видалити розділ", DeleteObject, IfSectionsNotEmpty),
+                new CommandInfo("переіменувати розділ", RenameObject, IfSectionsNotEmpty)
+            };
+        }
+
+        
+    }
+}
+/*public void DeleteSection()
         {
              Console.WriteLine("Введіть ім'я розділу");
             string name = Console.ReadLine();
@@ -50,16 +84,7 @@ namespace QuizProject
             Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
             Console.ReadKey(true);
         }
-        protected override void IniCommandsInfo()
-        {
-            commandsInfo = new CommandInfo[] {
-                new CommandInfo("назад", null, AllwaysDisplay),
-                 new CommandInfo("створити розділ", CreateSection, AllwaysDisplay),
-                new CommandInfo("видалити розділ", DeleteSection, IfSectionsNotEmpty),
-                new CommandInfo("переіменувати розділ", RenameSection, IfSectionsNotEmpty)
-            };
-        }
-
+        
         private void RenameSection()
         {
             bool check = true;
@@ -93,8 +118,4 @@ namespace QuizProject
         }
 
         protected override void PrepareScreen()
-        {
-            Console.Clear();
-        }
-    }
-}
+            => Console.Clear();*/
