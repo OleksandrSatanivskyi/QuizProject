@@ -14,12 +14,6 @@ namespace QuizProject
         public int Id;
         private static int Count=0;
 
-        public Section():this("Section") 
-        {
-            Count++;
-            Id = Count;
-        }
-
         public Section(string Name)
         {
             Count++;

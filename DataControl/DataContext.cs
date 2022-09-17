@@ -30,7 +30,7 @@ namespace QuizProject
                 Directory.CreateDirectory(directoryName);
             }
         }
-        public string FileName { get; set; } = "QuizProject.dat";
+        public const string FileName = "QuizProject.dat";
         public string FilePath=>Path.Combine(directoryName, FileName);
         public DataContext() 
         {

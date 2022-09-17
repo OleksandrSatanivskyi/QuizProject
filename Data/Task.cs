@@ -35,7 +35,7 @@ namespace QuizProject
         }
         public void EditOptions(string answer, params string[] Options) 
         {
-        CorrectAnswer=answer;
+            CorrectAnswer=answer;
             AnswerOptions = new List<string>();
             AnswerOptions.AddRange(Options);
         }
