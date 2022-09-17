@@ -10,7 +10,7 @@ namespace QuizProject
     public struct Task
     {
         public string Name { get; private set; }
-        public int Id { get; private set; }
+        public int Id;
         public string Question { get; private set; }
         public List<string> AnswerOptions { get; private set; }
         public string CorrectAnswer { get; private set; }

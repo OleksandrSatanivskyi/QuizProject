@@ -9,7 +9,6 @@ namespace QuizProject.Running
     public abstract class CommandManager
     {
         public List<Section> Sections { get; protected set; }
-        public List<Subsection> Subsections { get; protected set; }
         public List<Quiz> Quizzes { get; protected set; }
         protected CommandInfo[] commandsInfo;
 
@@ -38,7 +37,6 @@ namespace QuizProject.Running
         }
         protected static bool AllwaysDisplay() { return true; }
         protected bool IfSectionsNotEmpty() { return Sections.Any(); }
-        protected bool IfSubsectionsNotEmpty() { return Subsections.Any(); }
         protected bool IfQuizzesNotEmpty() { return Quizzes.Any(); }
         private void ShowMenu()
         {

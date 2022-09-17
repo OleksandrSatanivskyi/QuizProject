@@ -10,10 +10,9 @@ namespace QuizProject
     public class QuizManager : CommandManager
     {
   
-        public QuizManager(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
+        public QuizManager(List<Section> Sections, List<Quiz> Quizzes)
         {
             this.Sections = Sections;
-            this.Subsections = Subsections;
             this.Quizzes = Quizzes;
             IniCommandsInfo();
         }
@@ -22,9 +21,9 @@ namespace QuizProject
             commandsInfo = new CommandInfo[] {
                 new CommandInfo("назад", null, AllwaysDisplay),
                 new CommandInfo("видалити вікторину", DeleteQuiz, IfQuizzesNotEmpty),
-                new CommandInfo("створити вікторину", CreateQuiz, IfSubsectionsNotEmpty),
-                new CommandInfo("переiменувати вікторину", RenameQuiz, IfSubsectionsNotEmpty),
-                new CommandInfo("змінити розділ і підрозділ вікторини", ChangeLocation, IfSubsectionsNotEmpty),
+                new CommandInfo("створити вікторину", CreateQuiz, IfSectionsNotEmpty),
+                new CommandInfo("переiменувати вікторину", RenameQuiz, IfSectionsNotEmpty),
+                new CommandInfo("змінити розділ і підрозділ вікторини", ChangeLocation, IfSectionsNotEmpty),
                 new CommandInfo("додати запитання", CreateTask, IfQuizzesNotEmpty),
                 new CommandInfo("видалити запитання", DeleteTask, IfQuizzesNotEmpty),
                 new CommandInfo("редагувати варіанти відповіді", EditTask, IfQuizzesNotEmpty)

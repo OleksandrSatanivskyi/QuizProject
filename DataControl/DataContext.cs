@@ -12,9 +12,8 @@ namespace QuizProject
     [Serializable]
     public class DataContext
     {
-        private DataSet dataSet=new DataSet();
+        private DataSet dataSet = new DataSet();
         public List<Section> Sections { get; private set; }
-        public List<Subsection> Subsections { get; private set; }
         public List<Quiz> Quizzes { get; private set; }
         public List<Task> Tasks { get; private set; }
         private string directoryName = "";
@@ -36,14 +35,12 @@ namespace QuizProject
         public DataContext() 
         {
             Sections = dataSet.Sections;
-            Subsections = dataSet.Subsections;
             Quizzes = dataSet.Quizzes;
             Tasks = dataSet.Tasks;
         }
         public void CreateTestingData() 
         {
             CreateSections();
-            CreateSubsections();
             CreateTasks();
             CreateQuizzes();
         }
@@ -78,19 +75,9 @@ namespace QuizProject
 
         private void CreateQuizzes()
         {
-            Quizzes.Add(new Quiz("Вікторина на логіку",Subsections[1],Tasks[0], Tasks[1], Tasks[2]));
-            Quizzes.Add(new Quiz("Вікторина на фізику", Subsections[2], Tasks[3], Tasks[4], Tasks[5]));
-            Quizzes.Add(new Quiz("Вікторина на знання історії", Subsections[4], Tasks[6], Tasks[7]));
-        }
-
-        private void CreateSubsections()
-        {
-            Subsections.Add(new Subsection("Математика", Sections[0]));
-            Subsections.Add(new Subsection("Логіка", Sections[0]));
-            Subsections.Add(new Subsection("Фізика", Sections[1]));
-            Subsections.Add(new Subsection("Біологія", Sections[1]));
-            Subsections.Add(new Subsection("Історія", Sections[2]));
-            Subsections.Add(new Subsection("Правознавство", Sections[2]));
+            Quizzes.Add(new Quiz("Вікторина на логіку",Sections[0],Tasks[0], Tasks[1], Tasks[2]));
+            Quizzes.Add(new Quiz("Вікторина на фізику", Sections[1], Tasks[3], Tasks[4], Tasks[5]));
+            Quizzes.Add(new Quiz("Вікторина на знання історії", Sections[2], Tasks[6], Tasks[7]));
         }
 
         private void CreateSections()
@@ -103,9 +90,7 @@ namespace QuizProject
         {
             return string.Concat("Дані програми:\n",
                Sections.ToLineList("  Розділи"),
-               Subsections.ToLineList("  Підрозділи"),
-               Quizzes.ToLineList("  Вікторини")
-               );
+               Quizzes.ToLineList("  Вікторини"));
         }
         public void Save() 
         { 
@@ -122,7 +107,6 @@ namespace QuizProject
             using (FileStream fstream = File.OpenRead(FilePath))
                 dataSet=(DataSet)bFormatter.Deserialize(fstream);
             Sections = dataSet.Sections;
-            Subsections = dataSet.Subsections;
             Quizzes = dataSet.Quizzes;
             Tasks = dataSet.Tasks;
         }

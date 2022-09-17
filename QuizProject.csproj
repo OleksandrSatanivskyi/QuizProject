@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext.cs" />
-    <Compile Include="DataSet.cs" />
+    <Compile Include="DataControl\DataContext.cs" />
+    <Compile Include="DataControl\DataSet.cs" />
     <Compile Include="Running\DataManager.cs" />
-    <Compile Include="EnumerableMethods.cs" />
+    <Compile Include="DataControl\EnumerableMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Quiz.cs" />

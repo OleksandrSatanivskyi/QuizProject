@@ -9,10 +9,9 @@ namespace QuizProject
 {
     public class SectionManager: CommandManager
     {
-        public SectionManager(List<Section> Sections, List<Subsection> Subsections, List<Quiz> Quizzes)
+        public SectionManager(List<Section> Sections, List<Quiz> Quizzes)
         {
-           this.Sections = Sections;
-            this.Subsections = Subsections;
+            this.Sections = Sections;
             this.Quizzes = Quizzes;
             IniCommandsInfo();
         }
