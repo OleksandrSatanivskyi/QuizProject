@@ -16,7 +16,7 @@ namespace QuizProject
         public List<Section> Sections { get; private set; }
         public List<Quiz> Quizzes { get; private set; }
         public List<Task> Tasks { get; private set; }
-        private string directoryName = "";
+        private string directoryName = @"C:\Users\" + Environment.UserName + @"\source\repos\QuizProject";
         public string DirectoryName
         {
             get { return directoryName; }
@@ -30,8 +30,8 @@ namespace QuizProject
                 Directory.CreateDirectory(directoryName);
             }
         }
-        public const string FileName = "QuizProject.dat";
-        public string FilePath=>Path.Combine(directoryName, FileName);
+        public const string FileName = "QuizProjectData.dat";
+        public string FilePath => Path.Combine(directoryName, FileName);
         public DataContext() 
         {
             Sections = dataSet.Sections;
@@ -92,13 +92,15 @@ namespace QuizProject
                Sections.ToLineList("  Розділи"),
                Quizzes.ToLineList("  Вікторини"));
         }
+
         public void Save() 
         { 
             BinaryFormatter bFormatter= new BinaryFormatter();
-            using (FileStream fstream=new FileStream(FileName, FileMode.Create,
+            using (FileStream fstream=new FileStream(FilePath, FileMode.OpenOrCreate,
                 FileAccess.Write, FileShare.None)) 
             bFormatter.Serialize(fstream, dataSet);
         }
+
         public void Load() 
         {
             if (!File.Exists(FilePath))

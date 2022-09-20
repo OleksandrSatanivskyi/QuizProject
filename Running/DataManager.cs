@@ -39,11 +39,16 @@ namespace QuizProject
         {
             quizManager.Run();
         }
-        
+
 
         protected override void PrepareScreen()
         {
             Console.Clear();
+        }
+        protected override void AfterScreen()
+        {
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
         }
     }
 }

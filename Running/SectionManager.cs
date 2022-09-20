@@ -31,6 +31,11 @@ namespace QuizProject
             throw new NotImplementedException();
         }
 
+        Section IObjectManager<Section>.GetObject()
+        {
+            throw new NotImplementedException();
+        }
+
         public void RenameObject()
         {
             throw new NotImplementedException();
@@ -47,12 +52,17 @@ namespace QuizProject
         }
 
         protected override void PrepareScreen()
-            => Console.Clear();
-
-        Section IObjectManager<Section>.GetObject()
         {
-            throw new NotImplementedException();
+            Console.Clear();
         }
+        protected override void AfterScreen()
+        {
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
+        }
+
+        protected override void PrepareRunning()
+            => Console.ReadKey(true);
     }
 }
 /*public void DeleteSection()

@@ -21,6 +21,7 @@ namespace QuizProject.Running
 
         protected virtual void PrepareRunning() { }
         protected abstract void PrepareScreen();
+        protected abstract void AfterScreen();
 
         public void Run()
         {
@@ -33,6 +34,7 @@ namespace QuizProject.Running
                 if (commandInfo.Command == null)
                     return;
                 commandInfo.Command();
+                AfterScreen();
             }
         }
         protected static bool AllwaysDisplay() { return true; }

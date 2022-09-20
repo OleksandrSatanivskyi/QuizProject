@@ -9,9 +9,9 @@ namespace QuizProject
     [Serializable]
     public class Quiz
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public int Id;
-        public Section Section { get; private set; }
+        public Section Section { get; set; }
         public List<Task> Tasks { get; }
         private static int Count=0;
 
@@ -59,14 +59,6 @@ namespace QuizProject
         {
             return $"{Name}\n\tId: {Id}" +
                 $"\n\tРозділ: {Section.Name}";
-        }
-
-        public void Rename(string newName)
-            => Name = newName;
-
-        public void ChangeLocation(Section newSection)
-        {
-           Section = newSection;
         }
     }
 }

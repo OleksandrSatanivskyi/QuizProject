@@ -34,7 +34,6 @@ namespace QuizProject.Running
         {
             dataContext.Save();
             Console.WriteLine("Зміни збережено");
-            Console.ReadKey();
         }
 
         private void EditData()
@@ -52,6 +51,11 @@ namespace QuizProject.Running
         protected override void PrepareScreen()
         {
             Console.Clear();
+        }
+        protected override void AfterScreen()
+        {
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
         }
     }
 }
