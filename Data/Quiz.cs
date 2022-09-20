@@ -25,6 +25,15 @@ namespace QuizProject
             this.Tasks.AddRange(Tasks);
         }
 
+        public Quiz(string Name, Section Section)
+        {
+            Count++;
+            Id = Count;
+            this.Name = Name;
+            this.Section = Section;
+            Tasks = new List<Task>();
+        }
+
         public void AddTask(Task task) 
         {
          Tasks.Add(task);

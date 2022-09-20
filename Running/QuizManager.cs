@@ -32,20 +32,23 @@ namespace QuizProject
 
         public void CreateObject()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Введіть ім'я вікторини");
+            string quizName = Console.ReadLine();
+
+            Console.WriteLine("Введіть ім'я розділу, до якого буде належати вікторина");
+            string sectionName = Console.ReadLine();
+            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+
+            if (section == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Quizzes.Add(new Quiz(quizName, section));
+                Console.WriteLine("Вікторина була успішно Створена");
+            }
         }
 
-        private Quiz GetObject(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RenameObject()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteObject()
+        private Quiz GetObject()
         {
             Console.WriteLine("Введіть ім'я розділу, до якого належить вікторина");
             string sectionName = Console.ReadLine();
@@ -55,6 +58,17 @@ namespace QuizProject
             string quizName = Console.ReadLine();
             var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
+            return quiz;
+        }
+
+        public void RenameObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteObject()
+        {
+            var quiz = this.GetObject();
 
             if (quiz == null)
                 Console.WriteLine("Помилка");

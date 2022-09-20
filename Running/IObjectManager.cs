@@ -9,7 +9,7 @@ namespace QuizProject.Running
     public interface IObjectManager<T>
     {
         void CreateObject();
-        T GetObject(string name);
+        T GetObject();
         void RenameObject();
         void DeleteObject();
         

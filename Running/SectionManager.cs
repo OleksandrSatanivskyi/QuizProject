@@ -49,7 +49,7 @@ namespace QuizProject
         protected override void PrepareScreen()
             => Console.Clear();
 
-        Section IObjectManager<Section>.GetObject(string name)
+        Section IObjectManager<Section>.GetObject()
         {
             throw new NotImplementedException();
         }
