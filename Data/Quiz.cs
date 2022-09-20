@@ -9,7 +9,7 @@ namespace QuizProject
     [Serializable]
     public class Quiz
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public int Id;
         public Section Section { get; private set; }
         public List<Task> Tasks { get; }

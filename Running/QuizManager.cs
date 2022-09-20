@@ -2,14 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizProject
 {
     public class QuizManager : CommandManager, IObjectManager<Quiz>
     {
-  
+
         public QuizManager(List<Section> Sections, List<Quiz> Quizzes)
         {
             this.Sections = Sections;
@@ -63,7 +61,15 @@ namespace QuizProject
 
         public void RenameObject()
         {
-            throw new NotImplementedException();
+            var quiz = this.GetObject();
+
+            if (quiz == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                quiz.Name = Console.ReadLine();
+                Console.WriteLine("Вікторина була успішно видалена");
+            }
         }
 
         public void DeleteObject()
@@ -119,13 +125,13 @@ namespace QuizProject
                     Console.WriteLine("Розділ було змінено");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-            Console.WriteLine("Помилка");
+                Console.WriteLine("Помилка");
             }
             Console.ReadKey(true);
         }
-        
+
 
         private void EditTask()
         {
@@ -141,23 +147,24 @@ namespace QuizProject
                     string taskName = Console.ReadLine();
                     foreach (var task in quiz.Tasks)
                     {
-                        if (task.Name == taskName) 
+                        if (task.Name == taskName)
                         {
                             Console.WriteLine("Введіть правильну відповідь запитання");
-                    string answer = Console.ReadLine();
-                    Console.WriteLine("Вводьте варіанти відповіді з нового рядка\n(щоб припинити введіть \"exit\")");
-                    List<string> variants = new List<string>();
-                    string variant = "";
-                    while (variant != "exit")
-                    {
-                        variant = Console.ReadLine();
-                        variants.Add(variant);
-                    }
+                            string answer = Console.ReadLine();
+                            Console.WriteLine("Вводьте варіанти відповіді з нового рядка\n(щоб припинити введіть \"exit\")");
+                            List<string> variants = new List<string>();
+                            string variant = "";
+                            while (variant != "exit")
+                            {
+                                variant = Console.ReadLine();
+                                variants.Add(variant);
+                            }
 
                             task.EditOptions(answer, variants.ToArray());
-                    break; }
+                            break;
+                        }
                     }
-                    
+
                 }
             }
             if (checkQuiz == true)
@@ -182,15 +189,15 @@ namespace QuizProject
                 if (quizName == quiz.Name)
                 {
                     Console.WriteLine("Введіть назву запитання");
-                    string taskName=Console.ReadLine();
-                    foreach (var task in quiz.Tasks) 
+                    string taskName = Console.ReadLine();
+                    foreach (var task in quiz.Tasks)
                     {
-                        if (task.Name == taskName) 
+                        if (task.Name == taskName)
                         {
-                        checkQuestion = true;
+                            checkQuestion = true;
                             quiz.Tasks.Remove(task);
                         }
-                    } 
+                    }
                     break;
                 }
             }
@@ -209,28 +216,28 @@ namespace QuizProject
         private void CreateTask()
         {
             Console.WriteLine("Введіть назву вікторини");
-            string quizName=Console.ReadLine();
+            string quizName = Console.ReadLine();
             bool checkQuiz = false;
             foreach (var quiz in Quizzes)
             {
-                if (quizName == quiz.Name) 
+                if (quizName == quiz.Name)
                 {
-                checkQuiz = true;
+                    checkQuiz = true;
                     Console.WriteLine("Введіть назву запитання");
-            string taskName = Console.ReadLine();
-            Console.WriteLine("Введіть запитання");
-            string question = Console.ReadLine();
-            Console.WriteLine("Введіть правильну відповідь запитання");
-            string answer = Console.ReadLine();
-            Console.WriteLine("Вводьте варіанти відповіді з нового рядка\n(щоб припинити введіть \"exit\")");
-            List<string> variants=new List<string>();
-            string variant = "";
-            while(variant!="exit")
-            {
-            variant= Console.ReadLine();
-                variants.Add(variant);
-            }
-            Task task= new Task(taskName, question, answer, variants.ToArray());
+                    string taskName = Console.ReadLine();
+                    Console.WriteLine("Введіть запитання");
+                    string question = Console.ReadLine();
+                    Console.WriteLine("Введіть правильну відповідь запитання");
+                    string answer = Console.ReadLine();
+                    Console.WriteLine("Вводьте варіанти відповіді з нового рядка\n(щоб припинити введіть \"exit\")");
+                    List<string> variants = new List<string>();
+                    string variant = "";
+                    while (variant != "exit")
+                    {
+                        variant = Console.ReadLine();
+                        variants.Add(variant);
+                    }
+                    Task task = new Task(taskName, question, answer, variants.ToArray());
                     quiz.AddTask(task);
                     break;
                 }
@@ -250,110 +257,110 @@ namespace QuizProject
         protected override void PrepareScreen()
             => Console.Clear();
 
-       
-
-        Quiz IObjectManager<Quiz>.GetObject(string name)
+        Quiz IObjectManager<Quiz>.GetObject()
         {
             throw new NotImplementedException();
         }
+
+
     }
 }
-        /*public void CreateObject()
+/*public void CreateObject()
 {
-   Console.WriteLine("Введіть ім\'я вікторини");
-   string quizName = Console.ReadLine();
-   Console.WriteLine("Введіть розділ");
-   string sectionName = Console.ReadLine();
-   Console.WriteLine("Введіть підрозділ");
-   string subsectionName = Console.ReadLine();
-   bool checkSection = false;
-   bool checkSubsection = false;
-   foreach (var section in Sections)
+Console.WriteLine("Введіть ім\'я вікторини");
+string quizName = Console.ReadLine();
+Console.WriteLine("Введіть розділ");
+string sectionName = Console.ReadLine();
+Console.WriteLine("Введіть підрозділ");
+string subsectionName = Console.ReadLine();
+bool checkSection = false;
+bool checkSubsection = false;
+foreach (var section in Sections)
+{
+if (section.Name == sectionName)
+{
+   checkSection = true;
+   foreach (var subsection in Subsections)
    {
-       if (section.Name == sectionName)
+       if (subsection.Name == subsectionName)
        {
-           checkSection = true;
-           foreach (var subsection in Subsections)
+           checkSubsection = true;
+           if (checkSection == true && checkSubsection == true)
            {
-               if (subsection.Name == subsectionName)
-               {
-                   checkSubsection = true;
-                   if (checkSection == true && checkSubsection == true)
-                   {
-                       Quizzes.Add(new Quiz(quizName, subsection));
-                       Console.WriteLine("Вікторина успішно створена!");
+               Quizzes.Add(new Quiz(quizName, subsection));
+               Console.WriteLine("Вікторина успішно створена!");
 
-                   }
-                   break;
-               }
            }
+           break;
        }
    }
-   if (checkSection == false || checkSubsection == false)
-   {
-       Console.WriteLine("Помилка");
-   }
-   Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-   Console.ReadKey(true);
+}
+}
+if (checkSection == false || checkSubsection == false)
+{
+Console.WriteLine("Помилка");
+}
+Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
+Console.ReadKey(true);
 }
 
 public Quiz GetObject(string name)
 {
-   throw new NotImplementedException();
+throw new NotImplementedException();
 }
 private void RenameObject()
 {
-   bool check = true;
-   try
+bool check = true;
+try
+{
+Console.WriteLine("Введіть ім'я вікторини");
+string quizName = Console.ReadLine();
+Quiz quiz = Quizzes.Where(e => e.Name == quizName).First();
+Console.WriteLine("Введіть нове ім'я");
+string newName = Console.ReadLine();
+foreach (var q in Quizzes)
+{
+   if (q.Name == newName)
    {
-       Console.WriteLine("Введіть ім'я вікторини");
-       string quizName = Console.ReadLine();
-       Quiz quiz = Quizzes.Where(e => e.Name == quizName).First();
-       Console.WriteLine("Введіть нове ім'я");
-       string newName = Console.ReadLine();
-       foreach (var q in Quizzes)
-       {
-           if (q.Name == newName)
-           {
-               check = false;
-           }
-       }
-       if (check == true)
-       {
-           quiz.Rename(newName);
-           Console.WriteLine("Розділ був успішно переіменований");
-       }
-       else
-           Console.WriteLine("Помилка");
+       check = false;
    }
-   catch (Exception ex) 
-   { 
+}
+if (check == true)
+{
+   quiz.Rename(newName);
+   Console.WriteLine("Розділ був успішно переіменований");
+}
+else
    Console.WriteLine("Помилка");
-   }
-   Console.ReadKey(true);
+}
+catch (Exception ex) 
+{ 
+Console.WriteLine("Помилка");
+}
+Console.ReadKey(true);
 }
 
 private void DeleteObject()
 {
-    Console.WriteLine("Введіть ім'я розділу, до якого належить вікторина");
-   string sectionName = Console.ReadLine();
-   var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+Console.WriteLine("Введіть ім'я розділу, до якого належить вікторина");
+string sectionName = Console.ReadLine();
+var section = Sections.SingleOrDefault(s => s.Name == sectionName);
 
-   Console.WriteLine("Введіть ім'я підрозділу, до якого належить вікторина");
-   string subsectionName = Console.ReadLine();
-   var subsection = Subsections.SingleOrDefault(s => s.Name == subsectionName && s.Section == section);
+Console.WriteLine("Введіть ім'я підрозділу, до якого належить вікторина");
+string subsectionName = Console.ReadLine();
+var subsection = Subsections.SingleOrDefault(s => s.Name == subsectionName && s.Section == section);
 
-   Console.WriteLine("Введіть ім'я вікторини");
-   string quizName = Console.ReadLine();
-   var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
-                                     && q.Section == section
-                                     && q.Subsection == subsection);
+Console.WriteLine("Введіть ім'я вікторини");
+string quizName = Console.ReadLine();
+var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+                             && q.Section == section
+                             && q.Subsection == subsection);
 
-   if (quiz == null)
-       Console.WriteLine("Помилка");
-   else
-   {
-       Subsections.Remove(subsection);
-       Console.WriteLine("Вікторина була успішно видалена");
-   }
+if (quiz == null)
+Console.WriteLine("Помилка");
+else
+{
+Subsections.Remove(subsection);
+Console.WriteLine("Вікторина була успішно видалена");
+}
 }*/
