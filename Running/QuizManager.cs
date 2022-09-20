@@ -30,6 +30,41 @@ namespace QuizProject
             };
         }
 
+        public void CreateObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        private Quiz GetObject(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RenameObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteObject()
+        {
+            Console.WriteLine("Введіть ім'я розділу, до якого належить вікторина");
+            string sectionName = Console.ReadLine();
+            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+
+            Console.WriteLine("Введіть ім'я вікторини");
+            string quizName = Console.ReadLine();
+            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+                                              && q.Section == section);
+
+            if (quiz == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Quizzes.Remove(quiz);
+                Console.WriteLine("Вікторина була успішно видалена");
+            }
+        }
+
         private void ChangeLocation()
         {
             bool check = true;
@@ -201,26 +236,12 @@ namespace QuizProject
         protected override void PrepareScreen()
             => Console.Clear();
 
-        public void CreateObject()
+       
+
+        Quiz IObjectManager<Quiz>.GetObject(string name)
         {
             throw new NotImplementedException();
         }
-
-        private Quiz GetObject(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RenameObject()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteObject()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
         /*public void CreateObject()

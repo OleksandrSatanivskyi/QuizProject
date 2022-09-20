@@ -46,7 +46,13 @@ namespace QuizProject
             };
         }
 
-        
+        protected override void PrepareScreen()
+            => Console.Clear();
+
+        Section IObjectManager<Section>.GetObject(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 /*public void DeleteSection()
