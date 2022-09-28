@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace QuizProject.Data
 {
+    [Serializable]
     public class User
     {
         public string Name { get; set; }

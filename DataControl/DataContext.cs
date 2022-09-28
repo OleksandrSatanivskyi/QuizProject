@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Runtime.Serialization.Formatters.Binary;
+using QuizProject.Data;
 
 namespace QuizProject
 {
@@ -10,6 +11,7 @@ namespace QuizProject
     public class DataContext
     {
         private DataSet dataSet = new DataSet();
+        public List<User> Users = new List<User>();
         public List<Section> Sections { get; private set; }
         public List<Quiz> Quizzes { get; private set; }
         public List<Task> Tasks { get; private set; }
@@ -105,6 +107,7 @@ namespace QuizProject
             BinaryFormatter bFormatter= new BinaryFormatter();
             using (FileStream fstream = File.OpenRead(FilePath))
                 dataSet=(DataSet)bFormatter.Deserialize(fstream);
+            Users = dataSet.Users;
             Sections = dataSet.Sections;
             Quizzes = dataSet.Quizzes;
             Tasks = dataSet.Tasks;

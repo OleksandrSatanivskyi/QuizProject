@@ -12,7 +12,7 @@ namespace QuizProject
         public List<string> AnswerOptions { get; private set; }
         public string CorrectAnswer { get; private set; }
         private static int Count = 0;
-        public Task(string Name, string Question,string Answer,params string[] Options) 
+        public Task(string Name, string Question,string CorrectAnswer,params string[] Options) 
         {
             if (String.IsNullOrWhiteSpace(Name))
                 throw new ArgumentNullException("Wrong name!");
@@ -20,7 +20,7 @@ namespace QuizProject
             Id = Count;
             this.Name = Name;
             this.Question = Question;
-            this.CorrectAnswer= Answer;
+            this.CorrectAnswer= CorrectAnswer;
             this.AnswerOptions = new List<string>();
             this.AnswerOptions.AddRange(Options);
             Random rand = new Random();
