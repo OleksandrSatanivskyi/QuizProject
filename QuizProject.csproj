@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataControl\DataContext.cs" />
     <Compile Include="DataControl\DataSet.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Running\DataManager.cs" />
     <Compile Include="DataControl\EnumerableMethods.cs" />
     <Compile Include="Program.cs" />

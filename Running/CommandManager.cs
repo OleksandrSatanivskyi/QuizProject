@@ -1,13 +1,14 @@
-﻿using System;
+﻿using QuizProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace QuizProject.Running
 {
     public abstract class CommandManager
     {
+        public User CurrentUser { get; protected set; }
         public List<Section> Sections { get; protected set; }
         public List<Quiz> Quizzes { get; protected set; }
         protected CommandInfo[] commandsInfo;

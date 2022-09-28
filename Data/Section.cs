@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizProject
 {
@@ -16,6 +11,8 @@ namespace QuizProject
 
         public Section(string Name)
         {
+            if (String.IsNullOrWhiteSpace(Name))
+                throw new ArgumentNullException("Wrong name!");
             Count++;
             this.Name = Name;
             Id = Count;
