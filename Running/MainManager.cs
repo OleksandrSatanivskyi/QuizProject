@@ -1,4 +1,6 @@
-﻿using System;
+﻿using QuizProject.Data;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace QuizProject.Running
@@ -6,6 +8,7 @@ namespace QuizProject.Running
     public class MainManager : CommandManager
     {
         private DataContext dataContext = new DataContext();
+        public List<User> Users { get; set; }
         private DataManager dataManager { get; set; }
         private TextManager textManager { get; set; }
         public MainManager()
@@ -30,7 +33,12 @@ namespace QuizProject.Running
 
         private void SelectCurrentUser()
         {
+            Users = dataContext.Users;
             CurrentUser = UserMethods.SelectUser(Users);
+            if (Users == null)
+                Users = new List<User>();
+            if(!Users.Contains(CurrentUser))
+                Users.Add(CurrentUser);
         }
 
         private void Save()
@@ -48,7 +56,7 @@ namespace QuizProject.Running
         private void CreateTestingdata()
             => dataContext.CreateTestingData();
 
-        protected override void PrepareScreen()
+        protected override void PrepareScreen() 
             => Console.Clear();
 
         protected override void AfterScreen()

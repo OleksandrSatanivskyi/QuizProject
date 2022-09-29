@@ -11,7 +11,7 @@ namespace QuizProject
     public class DataContext
     {
         private DataSet dataSet = new DataSet();
-        public List<User> Users = new List<User>();
+        public List<User> Users { get; private set; }
         public List<Section> Sections { get; private set; }
         public List<Quiz> Quizzes { get; private set; }
         public List<Task> Tasks { get; private set; }

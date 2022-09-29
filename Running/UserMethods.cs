@@ -9,8 +9,11 @@ namespace QuizProject
     {
         public static User SelectUser(List<User> Users) 
         {
-            if (Users.Count <= 0)
+            if (Users == null)
+            {
+                Users = new List<User>();
                 return CreateNewUser(Users);
+            }
             Console.WriteLine("Введіть ім'я користувача");
             string userName = Console.ReadLine();
             var user = Users.SingleOrDefault(u => u.Name == userName);
@@ -20,10 +23,10 @@ namespace QuizProject
                 Console.WriteLine("Користувача з таким іменем не знайдено\n"+
                                   "Створити нового користувача?\n"+
                                   "1 - так\n"+
-                                  "0 - назад\n");
+                                  "0 - назад");
                 while (true)
                 {
-                    var key = Console.ReadKey();
+                    var key = Console.ReadKey(true);
                     if (key.Key == ConsoleKey.D1)
                         return CreateNewUser(Users);
                     if (key.Key == ConsoleKey.D0)
@@ -47,7 +50,7 @@ namespace QuizProject
                 Console.WriteLine("Пароль не співпадає\n" +
                                   "1 - спробувати ще раз\n" +
                                   "0 - вихід\n");
-                var key = Console.ReadKey();
+                var key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.D0)
                     return null;
                 else
@@ -66,7 +69,7 @@ namespace QuizProject
             string username = Console.ReadLine();
             Console.WriteLine("Введіть дату народження в форматі DD.MM.YYYY");
             DateTime birthDate = DateTime.Parse(Console.ReadLine());
-            if (birthDate > DateTime.Parse("01.12.1910") && birthDate < DateTime.Now)
+            if (birthDate < DateTime.Parse("01.12.1910") || birthDate > DateTime.Now)
                 throw new ArgumentException("Wrong birth date!");
             Console.WriteLine("Введіть пароль в форматі [1-9][1-9][1-9][1-9]");
             string password = Console.ReadLine();

@@ -19,16 +19,17 @@ namespace QuizProject.Data
             }
         }
         public DateTime BirthDate { get; set; }
+        private string password;
         public string Password 
         {
-            get => Password;
+            get => password;
             set 
             {
-                Regex regex = new Regex(@"[1-9][1-9][1-9][1-9]");
-                if (!regex.IsMatch(value))
-                    Password = value;
+                Regex regex = new Regex(@"^[1-9][1-9][1-9][1-9]$");
+                if (regex.IsMatch(value))
+                    password = value;
                 else
-                    throw new ArgumentException();
+                    throw new ArgumentException("Wrong password!");
             }
         }
 
@@ -36,7 +37,7 @@ namespace QuizProject.Data
         {
             if (String.IsNullOrWhiteSpace(Name))
                 throw new ArgumentNullException("Wrong name!");
-            if (BirthDate > DateTime.Parse("01.12.1910") && BirthDate < DateTime.Now)
+            if (BirthDate < DateTime.Parse("01.12.1910") || BirthDate > DateTime.Now)
                 throw new ArgumentException("Wrong birth date!");
             this.Name = Name;
             this.BirthDate = BirthDate;
