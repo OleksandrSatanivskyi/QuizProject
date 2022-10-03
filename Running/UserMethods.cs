@@ -45,6 +45,7 @@ namespace QuizProject
             string password = Console.ReadLine();
             User user = Users.SingleOrDefault
                 (u => u.Name == userName && u.Password == password);
+
             if (user == null)
             {
                 Console.WriteLine("Пароль не співпадає\n" +
@@ -67,13 +68,33 @@ namespace QuizProject
         {
             Console.WriteLine("Введіть ім'я");
             string username = Console.ReadLine();
+
+
             Console.WriteLine("Введіть дату народження в форматі DD.MM.YYYY");
             DateTime birthDate = DateTime.Parse(Console.ReadLine());
             if (birthDate < DateTime.Parse("01.12.1910") || birthDate > DateTime.Now)
                 throw new ArgumentException("Wrong birth date!");
+
+
+            Console.WriteLine("Новий користувач буде адміном?");
+            Console.WriteLine("1 - так\n" 
+                +"0 - ні");
+            var key = Console.ReadKey();
+            if (key.Key != ConsoleKey.D1
+                && key.Key != ConsoleKey.D0)
+                throw new ArgumentException("Uncorrect choice");
+            bool isAdmin = false;
+            if(key.Key == ConsoleKey.D1)
+                isAdmin = true;
+            if(key.Key == ConsoleKey.D0)
+                isAdmin = false;
+
+
             Console.WriteLine("Введіть пароль в форматі [1-9][1-9][1-9][1-9]");
             string password = Console.ReadLine();
-            User user = new User(username, birthDate, password);
+
+
+            User user = new User(username, birthDate, isAdmin, password);
             Users.Add(user);
             return user;
         }

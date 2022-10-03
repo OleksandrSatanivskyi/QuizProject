@@ -8,7 +8,6 @@ namespace QuizProject
     {
         static void Main(string[] args)
         {
-            //добавити CurrentUser в усі менеджери
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
             try

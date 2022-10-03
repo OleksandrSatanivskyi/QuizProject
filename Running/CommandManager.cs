@@ -32,7 +32,8 @@ namespace QuizProject.Running
                 PrepareScreen();
                 ShowMenu();
                 CommandInfo commandInfo = SelectCommandInfo();
-                if (commandInfo.Command == null)
+                if (commandInfo.Command == null 
+                    || commandInfo.Display() == false)
                     return;
                 commandInfo.Command();
                 AfterScreen();
@@ -55,7 +56,7 @@ namespace QuizProject.Running
 
         protected CommandInfo SelectCommandInfo()
         {
-            int num = Entering.EnterInt32("Номер команди",0, commandsInfo.Length - 1);
+            int num = Entering.EnterInt32("Номер команди", 0, commandsInfo.Length - 1);
             return commandsInfo[num];
         }
 

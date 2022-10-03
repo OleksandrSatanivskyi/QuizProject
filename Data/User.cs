@@ -19,6 +19,7 @@ namespace QuizProject.Data
             }
         }
         public DateTime BirthDate { get; set; }
+        public bool IsAdmin { get; set; }
         private string password;
         public string Password 
         {
@@ -33,7 +34,7 @@ namespace QuizProject.Data
             }
         }
 
-        public User(string Name, DateTime BirthDate, string Password) 
+        public User(string Name, DateTime BirthDate, bool IsAdmin, string Password) 
         {
             if (String.IsNullOrWhiteSpace(Name))
                 throw new ArgumentNullException("Wrong name!");
@@ -41,6 +42,7 @@ namespace QuizProject.Data
                 throw new ArgumentException("Wrong birth date!");
             this.Name = Name;
             this.BirthDate = BirthDate;
+            this.IsAdmin = IsAdmin;
             this.Password = Password;
         }
 

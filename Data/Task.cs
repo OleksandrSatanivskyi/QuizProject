@@ -39,14 +39,6 @@ namespace QuizProject
             AnswerOptions.AddRange(Options);
         }
         public override string ToString()
-        {
-            string answers="";
-            for (int i = 0; i < AnswerOptions.Count; i++)
-            {
-                answers +=AnswerOptions[i];
-                answers+="\n";
-            }
-            return $"Question: {Question}\nAnswers: {answers}";
-        }
+            => Name;
     }
 }
