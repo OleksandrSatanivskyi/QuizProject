@@ -17,17 +17,22 @@ namespace QuizProject.Running
             dataManager = new DataManager(dataContext);
             textManager = new TextManager(dataContext);
         }
-        private bool IfDataContextNotEmpty() { return !dataContext.Sections.Any(); }
-        private bool IfDataContextEmpty() { return dataContext.Sections.Any(); }
+
+        private bool IfDataContextNotEmpty() 
+            => !dataContext.Sections.Any() || dataContext.Sections == null; 
+
+        private bool IfDataContextEmpty() 
+            => dataContext.Sections.Any(); 
+
         protected override void IniCommandsInfo()
         {
             commandsInfo = new CommandInfo[] {
                 new CommandInfo("Вихід", null, AllwaysDisplay),
                 new CommandInfo("Вибрати/змінити користувача", SelectCurrentUser, AllwaysDisplay),
-                new CommandInfo("Створити тестові дані", CreateTestingdata, IfDataContextNotEmpty),
+                new CommandInfo("Створити тестові дані", CreateTestingdata, IfUserIsLogined),
                 new CommandInfo("Дані як текст", DataAsText, IfDataContextEmpty),
-                new CommandInfo("Редагувати дані", EditData , AllwaysDisplay),
-                new CommandInfo("Зберегти зміни", Save , AllwaysDisplay, true),
+                new CommandInfo("Редагувати дані", EditData , IfCurrentUserIsAdmin),
+                new CommandInfo("Зберегти зміни", Save , IfUserIsLogined, true),
             };
         }
 

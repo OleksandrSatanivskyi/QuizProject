@@ -73,7 +73,7 @@ namespace QuizProject
         {
             commandsInfo = new CommandInfo[] {
                 new CommandInfo("назад", null, AllwaysDisplay),
-                 new CommandInfo("створити розділ", CreateObject, AllwaysDisplay),
+                 new CommandInfo("створити розділ", CreateObject, IfCurrentUserIsAdmin),
                 new CommandInfo("видалити розділ", DeleteObject, IfSectionsNotEmpty),
                 new CommandInfo("переіменувати розділ", RenameObject, IfSectionsNotEmpty)
             };

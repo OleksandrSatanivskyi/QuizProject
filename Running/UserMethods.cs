@@ -79,14 +79,14 @@ namespace QuizProject
             Console.WriteLine("Новий користувач буде адміном?");
             Console.WriteLine("1 - так\n" 
                 +"0 - ні");
-            var key = Console.ReadKey();
-            if (key.Key != ConsoleKey.D1
-                && key.Key != ConsoleKey.D0)
+            var key = Console.ReadLine();
+            if (key != "1"
+                && key != "0")
                 throw new ArgumentException("Uncorrect choice");
             bool isAdmin = false;
-            if(key.Key == ConsoleKey.D1)
+            if(key == "1")
                 isAdmin = true;
-            if(key.Key == ConsoleKey.D0)
+            if(key == "0")
                 isAdmin = false;
 
 

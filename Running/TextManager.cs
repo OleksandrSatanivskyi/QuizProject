@@ -10,7 +10,8 @@ namespace QuizProject.Running
             Sections=dataContext.Sections;
             Quizzes=dataContext.Quizzes;
         }
-        private bool IfMoreThenOneQuiz() { return Quizzes.Count > 1; }
+        private bool IfMoreThenOneQuiz()
+            =>IfQuizzesNotEmpty() && Quizzes.Count > 1; 
         protected override void IniCommandsInfo()
         {
             commandsInfo = new CommandInfo[]

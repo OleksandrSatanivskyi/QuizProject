@@ -18,8 +18,8 @@ namespace QuizProject
         {
             commandsInfo = new CommandInfo[] {
                 new CommandInfo("Вихід в головне меню", null, AllwaysDisplay),
-                new CommandInfo("Змінити розділ", EditSection, AllwaysDisplay),
-                new CommandInfo("Змінити вікторину", EditQuiz, AllwaysDisplay),
+                new CommandInfo("Змінити розділ", EditSection, IfCurrentUserIsAdmin),
+                new CommandInfo("Змінити вікторину", EditQuiz, IfCurrentUserIsAdmin),
             };
         }
 

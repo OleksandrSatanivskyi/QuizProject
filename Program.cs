@@ -8,18 +8,19 @@ namespace QuizProject
     {
         static void Main(string[] args)
         {
+            //добавити логіку IsAdmin в усі Manager
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
-            try
-            {
+            //try
+            //{
                 MainManager mainManager = new MainManager();
                 mainManager.Run();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.ReadKey();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+           //     Console.WriteLine(ex.Message);
+             //   Console.ReadKey();
+            //}
             
         }
     }

@@ -39,9 +39,16 @@ namespace QuizProject.Running
                 AfterScreen();
             }
         }
-        protected static bool AllwaysDisplay() { return true; }
-        protected bool IfSectionsNotEmpty() { return Sections.Any(); }
-        protected bool IfQuizzesNotEmpty() { return Quizzes.Any(); }
+        protected bool IfUserIsLogined()
+           => this.CurrentUser != null;
+        protected bool IfCurrentUserIsAdmin()
+            => IfUserIsLogined() && this.CurrentUser.IsAdmin;
+        protected static bool AllwaysDisplay()
+            => true;
+        protected bool IfSectionsNotEmpty()  
+            => Sections != null && Sections.Any(); 
+        protected bool IfQuizzesNotEmpty()  
+            => Quizzes != null && Quizzes.Any(); 
         private void ShowMenu()
         {
             Console.WriteLine("Список команд меню:");
