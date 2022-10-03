@@ -111,6 +111,14 @@ namespace QuizProject
             Sections = dataSet.Sections;
             Quizzes = dataSet.Quizzes;
             Tasks = dataSet.Tasks;
+            if (Users == null)
+                Users = new List<User>();
+            if (Sections == null)
+                Sections = new List<Section>();
+            if (Quizzes == null)
+                Quizzes = new List<Quiz>();
+            if (Tasks == null)
+                Tasks = new List<Task>();
         }
     }
 }

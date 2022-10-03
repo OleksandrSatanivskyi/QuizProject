@@ -70,8 +70,9 @@ namespace QuizProject
                 Console.WriteLine("Помилка");
             else
             {
+                Console.WriteLine("Введіть нове ім'я для вікторини");
                 quiz.Name = Console.ReadLine();
-                Console.WriteLine("Вікторина була успішно видалена");
+                Console.WriteLine("Вікторина була успішно переіменована");
             }
         }
 

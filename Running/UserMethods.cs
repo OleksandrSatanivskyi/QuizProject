@@ -9,7 +9,7 @@ namespace QuizProject
     {
         public static User SelectUser(List<User> Users) 
         {
-            if (Users == null)
+            if (Users == null || Users.Count <= 0)
             {
                 Users = new List<User>();
                 return CreateNewUser(Users);

@@ -5,7 +5,7 @@ namespace QuizProject
     [Serializable]
     public class Section
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public int Id;
         private static int Count=0;
 

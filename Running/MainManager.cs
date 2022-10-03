@@ -35,8 +35,6 @@ namespace QuizProject.Running
         {
             Users = dataContext.Users;
             CurrentUser = UserMethods.SelectUser(Users);
-            if (Users == null)
-                Users = new List<User>();
             if(!Users.Contains(CurrentUser))
                 Users.Add(CurrentUser);
         }

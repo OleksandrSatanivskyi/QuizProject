@@ -1,6 +1,7 @@
 ﻿using QuizProject.Running;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuizProject
 {
@@ -15,27 +16,55 @@ namespace QuizProject
 
         public void CreateObject()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Введіть ім'я розділу");
+            string Name = Console.ReadLine();
+            var section = Sections.SingleOrDefault(s => s.Name == Name);
+
+            if (section != null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Sections.Add(new Section(Name));
+                Console.WriteLine("Розділ був успішно створений");
+            }
         }
 
         public void DeleteObject()
         {
-            throw new NotImplementedException();
+            var section = this.GetObject();
+
+            if (section == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Sections.Remove(section);
+                Console.WriteLine("Розділ був успішно видалений");
+            }
         }
 
-        private Section GetObject(string name)
+        private Section GetObject()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Введіть ім'я розділу");
+            string name = Console.ReadLine();
+            var section = Sections.SingleOrDefault(s => s.Name == name);
+            return section;
         }
 
         Section IObjectManager<Section>.GetObject()
-        {
-            throw new NotImplementedException();
-        }
+        => this.GetObject();
 
         public void RenameObject()
         {
-            throw new NotImplementedException();
+            var section = this.GetObject();
+
+            if (section == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Console.WriteLine("Введіть нове ім'я для вікторини");
+                section.Name = Console.ReadLine();
+                Console.WriteLine("Вікторина була успішно переіменована");
+            }
         }
 
         protected override void IniCommandsInfo()
@@ -64,7 +93,7 @@ namespace QuizProject
 }
 /*public void DeleteSection()
         {
-             Console.WriteLine("Введіть ім'я розділу");
+            Console.WriteLine("Введіть ім'я розділу");
             string name = Console.ReadLine();
             var section = Sections.SingleOrDefault(s => s.Name == name);
 
