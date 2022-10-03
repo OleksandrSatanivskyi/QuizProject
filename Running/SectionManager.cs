@@ -1,4 +1,5 @@
-﻿using QuizProject.Running;
+﻿using QuizProject.Data;
+using QuizProject.Running;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,11 @@ namespace QuizProject
 {
     public class SectionManager: CommandManager, IObjectManager<Section>
     {
-        public SectionManager(List<Section> Sections, List<Quiz> Quizzes)
+        public SectionManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
         {
             this.Sections = Sections;
             this.Quizzes = Quizzes;
+            CurrentUser = currentUser;
             IniCommandsInfo();
         }
 

@@ -1,4 +1,5 @@
-﻿using QuizProject.Running;
+﻿using QuizProject.Data;
+using QuizProject.Running;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,11 @@ namespace QuizProject
     public class QuizManager : CommandManager, IObjectManager<Quiz>
     {
 
-        public QuizManager(List<Section> Sections, List<Quiz> Quizzes)
+        public QuizManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
         {
             this.Sections = Sections;
             this.Quizzes = Quizzes;
+            CurrentUser = currentUser;
             IniCommandsInfo();
         }
         protected override void IniCommandsInfo()

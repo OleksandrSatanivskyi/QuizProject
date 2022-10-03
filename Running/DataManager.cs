@@ -11,11 +11,8 @@ namespace QuizProject
         {
             Sections=dataContext.Sections;
             Quizzes=dataContext.Quizzes;
-            sectionManager = new SectionManager(Sections, Quizzes);
-            quizManager = new QuizManager(Sections, Quizzes);
-
-
-
+            sectionManager = new SectionManager(Sections, Quizzes, CurrentUser);
+            quizManager = new QuizManager(Sections, Quizzes, CurrentUser);
         }
         protected override void IniCommandsInfo()
         {

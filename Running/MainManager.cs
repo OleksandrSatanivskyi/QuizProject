@@ -37,6 +37,8 @@ namespace QuizProject.Running
             CurrentUser = UserMethods.SelectUser(Users);
             if(!Users.Contains(CurrentUser))
                 Users.Add(CurrentUser);
+            dataManager.CurrentUser = this.CurrentUser;
+            textManager.CurrentUser = this.CurrentUser;
         }
 
         private void Save()
