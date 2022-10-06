@@ -8,17 +8,18 @@ namespace QuizProject
 {
     public class SectionManager: CommandManager, IObjectManager<Section>
     {
-        public SectionManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
+        public SectionManager(List<Section> Sections, List<Quiz> Quizzes, List<Task> Tasks, User currentUser)
         {
             this.Sections = Sections;
             this.Quizzes = Quizzes;
+            this.Tasks = Tasks;
             CurrentUser = currentUser;
             IniCommandsInfo();
         }
 
         public void CreateObject()
         {
-            Console.WriteLine("Введіть ім'я розділу");
+            Console.WriteLine("Введіть назву розділу");
             string Name = Console.ReadLine();
             var section = Sections.SingleOrDefault(s => s.Name == Name);
 
@@ -46,7 +47,7 @@ namespace QuizProject
 
         private Section GetObject()
         {
-            Console.WriteLine("Введіть ім'я розділу");
+            Console.WriteLine("Введіть назву розділу");
             string name = Console.ReadLine();
             var section = Sections.SingleOrDefault(s => s.Name == name);
             return section;
@@ -63,7 +64,7 @@ namespace QuizProject
                 Console.WriteLine("Помилка");
             else
             {
-                Console.WriteLine("Введіть нове ім'я для вікторини");
+                Console.WriteLine("Введіть нове назву для вікторини");
                 section.Name = Console.ReadLine();
                 Console.WriteLine("Вікторина була успішно переіменована");
             }

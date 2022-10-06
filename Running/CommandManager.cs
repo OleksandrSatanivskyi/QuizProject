@@ -11,6 +11,7 @@ namespace QuizProject.Running
         public User CurrentUser { get; set; }
         public List<Section> Sections { get; protected set; }
         public List<Quiz> Quizzes { get; protected set; }
+        public List<Task> Tasks { get; protected set; }
         protected CommandInfo[] commandsInfo;
 
         protected abstract void IniCommandsInfo();
@@ -39,16 +40,22 @@ namespace QuizProject.Running
                 AfterScreen();
             }
         }
+
         protected bool IfUserIsLogined()
            => this.CurrentUser != null;
+
         protected bool IfCurrentUserIsAdmin()
             => IfUserIsLogined() && this.CurrentUser.IsAdmin;
+
         protected static bool AllwaysDisplay()
             => true;
+
         protected bool IfSectionsNotEmpty()  
             => Sections != null && Sections.Any(); 
+
         protected bool IfQuizzesNotEmpty()  
             => Quizzes != null && Quizzes.Any(); 
+
         private void ShowMenu()
         {
             Console.WriteLine("Список команд меню:");

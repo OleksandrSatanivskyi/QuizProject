@@ -7,13 +7,16 @@ namespace QuizProject
     {
         SectionManager sectionManager;
         QuizManager quizManager;
+
         public DataManager(DataContext dataContext) 
         {
-            Sections=dataContext.Sections;
-            Quizzes=dataContext.Quizzes;
-            sectionManager = new SectionManager(Sections, Quizzes, CurrentUser);
-            quizManager = new QuizManager(Sections, Quizzes, CurrentUser);
+            Sections = dataContext.Sections;
+            Quizzes = dataContext.Quizzes;
+            Tasks = dataContext.Tasks;
+            sectionManager = new SectionManager(Sections, Quizzes, Tasks, CurrentUser);
+            quizManager = new QuizManager(Sections, Quizzes, Tasks, CurrentUser);
         }
+
         protected override void IniCommandsInfo()
         {
             commandsInfo = new CommandInfo[] {
@@ -33,11 +36,11 @@ namespace QuizProject
             quizManager.Run();
         }
 
-
         protected override void PrepareScreen()
         {
             Console.Clear();
         }
+
         protected override void AfterScreen()
         {
             Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");

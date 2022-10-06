@@ -9,10 +9,11 @@ namespace QuizProject
     public class QuizManager : CommandManager, IObjectManager<Quiz>
     {
 
-        public QuizManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
+        public QuizManager(List<Section> Sections, List<Quiz> Quizzes, List<Task> Tasks, User currentUser)
         {
             this.Sections = Sections;
             this.Quizzes = Quizzes;
+            this.Tasks = Tasks;
             CurrentUser = currentUser;
             IniCommandsInfo();
         }
@@ -23,19 +24,17 @@ namespace QuizProject
                 new CommandInfo("видалити вікторину", DeleteObject, IfQuizzesNotEmpty),
                 new CommandInfo("створити вікторину", CreateObject, IfSectionsNotEmpty),
                 new CommandInfo("переiменувати вікторину", RenameObject, IfSectionsNotEmpty),
-                new CommandInfo("змінити розділ вікторини", ChangeSection, IfSectionsNotEmpty),
-                new CommandInfo("додати запитання", CreateTask, IfQuizzesNotEmpty),
-                new CommandInfo("видалити запитання", DeleteTask, IfQuizzesNotEmpty),
-                new CommandInfo("редагувати варіанти відповіді", EditTask, IfQuizzesNotEmpty)
+                new CommandInfo("змінити розділ вікторини", ChangeSection, IfSectionsNotEmpty)
+               
             };
         }
 
         public void CreateObject()
         {
-            Console.WriteLine("Введіть ім'я вікторини");
+            Console.WriteLine("Введіть назву вікторини");
             string quizName = Console.ReadLine();
 
-            Console.WriteLine("Введіть ім'я розділу, до якого буде належати вікторина");
+            Console.WriteLine("Введіть назву розділу, до якого буде належати вікторина");
             string sectionName = Console.ReadLine();
             var section = Sections.SingleOrDefault(s => s.Name == sectionName);
 
@@ -50,11 +49,11 @@ namespace QuizProject
 
         private Quiz GetObject()
         {
-            Console.WriteLine("Введіть ім'я розділу, до якого належить вікторина");
+            Console.WriteLine("Введіть назву розділу, до якого належить вікторина");
             string sectionName = Console.ReadLine();
             var section = Sections.SingleOrDefault(s => s.Name == sectionName);
 
-            Console.WriteLine("Введіть ім'я вікторини");
+            Console.WriteLine("Введіть назву вікторини");
             string quizName = Console.ReadLine();
             var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
@@ -72,7 +71,7 @@ namespace QuizProject
                 Console.WriteLine("Помилка");
             else
             {
-                Console.WriteLine("Введіть нове ім'я для вікторини");
+                Console.WriteLine("Введіть нову назву для вікторини");
                 quiz.Name = Console.ReadLine();
                 Console.WriteLine("Вікторина була успішно переіменована");
             }
@@ -95,7 +94,7 @@ namespace QuizProject
         {
             var quiz = GetObject();
             
-            Console.WriteLine("Введіть ім'я нового розділу");
+            Console.WriteLine("Введіть назву нового розділу");
             string newSectionName = Console.ReadLine();
             Section newSection = Sections.SingleOrDefault(e => e.Name == newSectionName);
             if (newSection == null)
@@ -228,15 +227,12 @@ namespace QuizProject
             Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
             Console.ReadKey(true);
         }
-
+    
         protected override void PrepareScreen()
-        {
-            Console.Clear();
-        }
+            => Console.Clear();
+        
         protected override void AfterScreen()
-        {
-            Console.ReadKey();
-        }
+            => Console.ReadKey();
 
 
     }

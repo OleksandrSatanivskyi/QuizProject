@@ -57,6 +57,7 @@
     <Compile Include="Running\CommandManager.cs" />
     <Compile Include="Running\Entering.cs" />
     <Compile Include="Running\MainManager.cs" />
+    <Compile Include="Running\TaskManager.cs" />
     <Compile Include="Running\TextManager.cs" />
     <Compile Include="Data\Section.cs" />
     <Compile Include="Running\SectionManager.cs" />
