@@ -16,6 +16,7 @@ namespace QuizProject
             CurrentUser = currentUser;
             IniCommandsInfo();
         }
+
         protected override void IniCommandsInfo()
         {
             commandsInfo = new CommandInfo[] {
@@ -104,128 +105,6 @@ namespace QuizProject
                 Console.WriteLine("Розділ був успішно змінений");
             }
         }
-
-
-       /* private void EditTask()
-        {
-            Console.WriteLine("Введіть назву вікторини");
-            string quizName = Console.ReadLine();
-            bool checkQuiz = false;
-            foreach (var quiz in Quizzes)
-            {
-                if (quizName == quiz.Name)
-                {
-                    checkQuiz = true;
-                    Console.WriteLine("Введіть назву запитання");
-                    string taskName = Console.ReadLine();
-                    foreach (var task in quiz.Tasks)
-                    {
-                        if (task.Name == taskName)
-                        {
-                            Console.WriteLine("Введіть правильну відповідь запитання");
-                            string answer = Console.ReadLine();
-                            Console.WriteLine("Вводьте варіанти відповіді з нового рядка\n(щоб припинити введіть \"exit\")");
-                            List<string> variants = new List<string>();
-                            string variant = "";
-                            while (variant != "exit")
-                            {
-                                variant = Console.ReadLine();
-                                variants.Add(variant);
-                            }
-
-                            task.EditOptions(answer, variants.ToArray());
-                            break;
-                        }
-                    }
-
-                }
-            }
-            if (checkQuiz == true)
-            {
-                Console.WriteLine("Запитання успішно відредаговане");
-            }
-            else
-            {
-                Console.WriteLine("Помилка");
-            }
-            Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-            Console.ReadKey(true);
-        }
-
-        private void DeleteTask()
-        {
-            Console.WriteLine("Введіть назву вікторини");
-            string quizName = Console.ReadLine();
-            bool checkQuestion = false;
-            foreach (var quiz in Quizzes)
-            {
-                if (quizName == quiz.Name)
-                {
-                    Console.WriteLine("Введіть назву запитання");
-                    string taskName = Console.ReadLine();
-                    foreach (var task in quiz.Tasks)
-                    {
-                        if (task.Name == taskName)
-                        {
-                            checkQuestion = true;
-                            quiz.Tasks.Remove(task);
-                        }
-                    }
-                    break;
-                }
-            }
-            if (checkQuestion == true)
-            {
-                Console.WriteLine("Запитання успішно видалене");
-            }
-            else
-            {
-                Console.WriteLine("Помилка");
-            }
-            Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-            Console.ReadKey(true);
-        }
-
-        private void CreateTask()
-        {
-            Console.WriteLine("Введіть назву вікторини");
-            string quizName = Console.ReadLine();
-            bool checkQuiz = false;
-            foreach (var quiz in Quizzes)
-            {
-                if (quizName == quiz.Name)
-                {
-                    checkQuiz = true;
-                    Console.WriteLine("Введіть назву запитання");
-                    string taskName = Console.ReadLine();
-                    Console.WriteLine("Введіть запитання");
-                    string question = Console.ReadLine();
-                    Console.WriteLine("Введіть правильну відповідь запитання");
-                    string answer = Console.ReadLine();
-                    Console.WriteLine("Вводьте варіанти відповіді з нового рядка\n(щоб припинити введіть \"exit\")");
-                    List<string> variants = new List<string>();
-                    string variant = "";
-                    while (variant != "exit")
-                    {
-                        variant = Console.ReadLine();
-                        variants.Add(variant);
-                    }
-                    Task task = new Task(taskName, question, answer, variants.ToArray());
-                    quiz.AddTask(task);
-                    break;
-                }
-            }
-            if (checkQuiz == true)
-            {
-                Console.WriteLine("Запитання успішно створене");
-            }
-            else
-            {
-                Console.WriteLine("Помилка");
-            }
-            Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-            Console.ReadKey(true);
-        }*/
     
         protected override void PrepareScreen()
             => Console.Clear();

@@ -7,6 +7,7 @@ namespace QuizProject
     {
         SectionManager sectionManager;
         QuizManager quizManager;
+        TaskManager taskManager;
 
         public DataManager(DataContext dataContext) 
         {
@@ -14,6 +15,7 @@ namespace QuizProject
             Quizzes = dataContext.Quizzes;
             sectionManager = new SectionManager(Sections, Quizzes, CurrentUser);
             quizManager = new QuizManager(Sections, Quizzes, CurrentUser);
+            taskManager = new TaskManager(Sections, Quizzes, CurrentUser);
         }
 
         protected override void IniCommandsInfo()
@@ -22,23 +24,21 @@ namespace QuizProject
                 new CommandInfo("Вихід в головне меню", null, AllwaysDisplay),
                 new CommandInfo("Змінити розділ", EditSection, IfCurrentUserIsAdmin),
                 new CommandInfo("Змінити вікторину", EditQuiz, IfCurrentUserIsAdmin),
+                 new CommandInfo("Змінити запитання", EditTask, IfCurrentUserIsAdmin),
             };
         }
 
+        private void EditTask()
+            => taskManager.Run();
+
         private void EditSection()
-        {
-            sectionManager.Run();
-        }
+            => sectionManager.Run();
         
         private void EditQuiz()
-        {
-            quizManager.Run();
-        }
+            => quizManager.Run();
 
         protected override void PrepareScreen()
-        {
-            Console.Clear();
-        }
+            => Console.Clear();
 
         protected override void AfterScreen()
         {
