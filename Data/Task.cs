@@ -11,9 +11,10 @@ namespace QuizProject
         public string Question { get; set; }
         public List<string> AnswerOptions { get; set; }
         public string CorrectAnswer { get; set; }
+        public int Score { get; set; }
         private static int Count = 0;
 
-        public Task(string Name, string Question, string CorrectAnswer, List<string> AnswerOptions)
+        public Task(string Name, string Question, string CorrectAnswer, List<string> AnswerOptions, int Score)
         {
             if (String.IsNullOrWhiteSpace(Name))
                 throw new ArgumentNullException("Wrong name!");
@@ -23,6 +24,7 @@ namespace QuizProject
             this.Question = Question;
             this.CorrectAnswer = CorrectAnswer;
             this.AnswerOptions = AnswerOptions;
+            this.Score = Score;
         }
 
         public void EditOptions(string answer, params string[] Options) 

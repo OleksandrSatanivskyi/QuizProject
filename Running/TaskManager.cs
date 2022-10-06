@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +7,14 @@ namespace QuizProject.Running
 {
     internal class TaskManager : CommandManager, IObjectManager<Task>
     {
+        public TaskManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
+        {
+            this.Sections = Sections;
+            this.Quizzes = Quizzes;
+            CurrentUser = currentUser;
+            IniCommandsInfo();
+        }
+
         public void CreateObject()
         {
             Console.WriteLine("Введіть назву запитання");
@@ -36,7 +45,10 @@ namespace QuizProject.Running
                 for (int i = 0; i < 3; i++)
                     answerOptions.Add(Console.ReadLine());
 
-                quiz.AddTask(new Task(taskName, question, correctAnswer, answerOptions));
+                Console.WriteLine("Введіть кількість балів за запитання");
+                int score = int.Parse(Console.ReadLine());
+
+                quiz.AddTask(new Task(taskName, question, correctAnswer, answerOptions, score));
                 Console.WriteLine("Запитання було успішно додане");
             }
         }
@@ -106,13 +118,48 @@ namespace QuizProject.Running
                 new CommandInfo("назад", null, AllwaysDisplay),
                 new CommandInfo("додати запитання", CreateObject, IfQuizzesNotEmpty),
                 new CommandInfo("видалити запитання", DeleteObject, IfQuizzesNotEmpty),
-                new CommandInfo("редагувати варіанти відповіді", EditAnswerOptions, IfQuizzesNotEmpty)
+                new CommandInfo("редагувати варіанти відповіді", EditAnswerOptions, IfQuizzesNotEmpty),
+                new CommandInfo("змінити кількість балів за запитання", EditScore, IfQuizzesNotEmpty)
             };
+        }
+
+        private void EditScore()
+        {
+            var task = this.GetObject();
+
+            if (task == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Console.WriteLine("Введіть кількість балів за запитання");
+                int score = int.Parse(Console.ReadLine());
+
+                task.Score = score;
+                Console.WriteLine("Кількість балів успішно змінена");
+            }
         }
 
         private void EditAnswerOptions()
         {
-            throw new NotImplementedException();
+            var task = this.GetObject();
+
+            if (task == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                Console.WriteLine("Введіть правильну відповідь");
+                string correctAnswer = Console.ReadLine();
+
+                Console.WriteLine("Введіть 3 хибних варіанти відповіді з нового рядка");
+                List<string> answerOptions = new List<string>();
+                for (int i = 0; i < 3; i++)
+                    answerOptions.Add(Console.ReadLine());
+
+                task.CorrectAnswer = correctAnswer;
+                task.AnswerOptions = answerOptions;
+                Console.WriteLine("Варіанти відповіді були успішно змінені");
+            }
+
         }
 
         protected override void PrepareScreen()
