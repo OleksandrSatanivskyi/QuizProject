@@ -9,7 +9,6 @@ namespace QuizProject.Running
         {
             Sections = dataContext.Sections;
             Quizzes = dataContext.Quizzes;
-            Tasks = dataContext.Tasks;
         }
         private bool IfMoreThenOneQuiz()
             =>IfQuizzesNotEmpty() && Quizzes.Count > 1; 

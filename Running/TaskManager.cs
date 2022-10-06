@@ -43,13 +43,24 @@ namespace QuizProject.Running
 
         public void DeleteObject()
         {
-            var task = this.GetObject();
+            Console.WriteLine("Введіть назву розділу, до якого належить вікторина, до якої належить запитання");
+            string sectionName = Console.ReadLine();
+            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+
+            Console.WriteLine("Введіть назву вікторини, до якої належить запитання");
+            string quizName = Console.ReadLine();
+            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+                                              && q.Section == section);
+
+            Console.WriteLine("Введіть назву запитання");
+            string taskName = Console.ReadLine();
+            var task = quiz.Tasks.SingleOrDefault(t => t.Name == taskName);
 
             if (task == null)
                 Console.WriteLine("Помилка");
             else
             {
-                Tasks.Remove(task);
+                quiz.Tasks.Remove(task);
                 Console.WriteLine("Запитання було успішно видалене");
             }
         }
@@ -67,9 +78,7 @@ namespace QuizProject.Running
 
             Console.WriteLine("Введіть назву запитання");
             string taskName = Console.ReadLine();
-            var task = Tasks.SingleOrDefault(t => t.Name == taskName
-                                            && quiz.Tasks.Contains(t)
-                                            && quiz.Section == section);
+            var task = quiz.Tasks.SingleOrDefault(t => t.Name == taskName);
 
             return task;
         }
@@ -97,11 +106,11 @@ namespace QuizProject.Running
                 new CommandInfo("назад", null, AllwaysDisplay),
                 new CommandInfo("додати запитання", CreateObject, IfQuizzesNotEmpty),
                 new CommandInfo("видалити запитання", DeleteObject, IfQuizzesNotEmpty),
-                new CommandInfo("редагувати варіанти відповіді", EditTask, IfQuizzesNotEmpty)
+                new CommandInfo("редагувати варіанти відповіді", EditAnswerOptions, IfQuizzesNotEmpty)
             };
         }
 
-        private void EditTask()
+        private void EditAnswerOptions()
         {
             throw new NotImplementedException();
         }

@@ -14,7 +14,6 @@ namespace QuizProject
         public List<User> Users { get; private set; }
         public List<Section> Sections { get; private set; }
         public List<Quiz> Quizzes { get; private set; }
-        public List<Task> Tasks { get; private set; }
         private string directoryName = @"C:\Users\" + Environment.UserName + @"\source\repos\QuizProject";
         public string DirectoryName
         {
@@ -35,7 +34,6 @@ namespace QuizProject
         {
             Sections = dataSet.Sections;
             Quizzes = dataSet.Quizzes;
-            Tasks = dataSet.Tasks;
         }
         public void CreateTestingData() 
         {
@@ -110,15 +108,12 @@ namespace QuizProject
             Users = dataSet.Users;
             Sections = dataSet.Sections;
             Quizzes = dataSet.Quizzes;
-            Tasks = dataSet.Tasks;
             if (Users == null)
                 Users = new List<User>();
             if (Sections == null)
                 Sections = new List<Section>();
             if (Quizzes == null)
                 Quizzes = new List<Quiz>();
-            if (Tasks == null)
-                Tasks = new List<Task>();
         }
     }
 }

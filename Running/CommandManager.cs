@@ -11,7 +11,6 @@ namespace QuizProject.Running
         public User CurrentUser { get; set; }
         public List<Section> Sections { get; protected set; }
         public List<Quiz> Quizzes { get; protected set; }
-        public List<Task> Tasks { get; protected set; }
         protected CommandInfo[] commandsInfo;
 
         protected abstract void IniCommandsInfo();

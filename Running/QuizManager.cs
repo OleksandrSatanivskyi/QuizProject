@@ -9,11 +9,10 @@ namespace QuizProject
     public class QuizManager : CommandManager, IObjectManager<Quiz>
     {
 
-        public QuizManager(List<Section> Sections, List<Quiz> Quizzes, List<Task> Tasks, User currentUser)
+        public QuizManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
         {
             this.Sections = Sections;
             this.Quizzes = Quizzes;
-            this.Tasks = Tasks;
             CurrentUser = currentUser;
             IniCommandsInfo();
         }
@@ -107,7 +106,7 @@ namespace QuizProject
         }
 
 
-        private void EditTask()
+       /* private void EditTask()
         {
             Console.WriteLine("Введіть назву вікторини");
             string quizName = Console.ReadLine();
@@ -226,7 +225,7 @@ namespace QuizProject
             }
             Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
             Console.ReadKey(true);
-        }
+        }*/
     
         protected override void PrepareScreen()
             => Console.Clear();
@@ -237,102 +236,3 @@ namespace QuizProject
 
     }
 }
-/*public void CreateObject()
-{
-Console.WriteLine("Введіть ім\'я вікторини");
-string quizName = Console.ReadLine();
-Console.WriteLine("Введіть розділ");
-string sectionName = Console.ReadLine();
-Console.WriteLine("Введіть підрозділ");
-string subsectionName = Console.ReadLine();
-bool checkSection = false;
-bool checkSubsection = false;
-foreach (var section in Sections)
-{
-if (section.Name == sectionName)
-{
-   checkSection = true;
-   foreach (var subsection in Subsections)
-   {
-       if (subsection.Name == subsectionName)
-       {
-           checkSubsection = true;
-           if (checkSection == true && checkSubsection == true)
-           {
-               Quizzes.Add(new Quiz(quizName, subsection));
-               Console.WriteLine("Вікторина успішно створена!");
-
-           }
-           break;
-       }
-   }
-}
-}
-if (checkSection == false || checkSubsection == false)
-{
-Console.WriteLine("Помилка");
-}
-Console.WriteLine("Нажміть будь-яку клавішу щоб повернутись в меню");
-Console.ReadKey(true);
-}
-
-public Quiz GetObject(string name)
-{
-throw new NotImplementedException();
-}
-private void RenameObject()
-{
-bool check = true;
-try
-{
-Console.WriteLine("Введіть ім'я вікторини");
-string quizName = Console.ReadLine();
-Quiz quiz = Quizzes.Where(e => e.Name == quizName).First();
-Console.WriteLine("Введіть нове ім'я");
-string newName = Console.ReadLine();
-foreach (var q in Quizzes)
-{
-   if (q.Name == newName)
-   {
-       check = false;
-   }
-}
-if (check == true)
-{
-   quiz.Rename(newName);
-   Console.WriteLine("Розділ був успішно переіменований");
-}
-else
-   Console.WriteLine("Помилка");
-}
-catch (Exception ex) 
-{ 
-Console.WriteLine("Помилка");
-}
-Console.ReadKey(true);
-}
-
-private void DeleteObject()
-{
-Console.WriteLine("Введіть ім'я розділу, до якого належить вікторина");
-string sectionName = Console.ReadLine();
-var section = Sections.SingleOrDefault(s => s.Name == sectionName);
-
-Console.WriteLine("Введіть ім'я підрозділу, до якого належить вікторина");
-string subsectionName = Console.ReadLine();
-var subsection = Subsections.SingleOrDefault(s => s.Name == subsectionName && s.Section == section);
-
-Console.WriteLine("Введіть ім'я вікторини");
-string quizName = Console.ReadLine();
-var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
-                             && q.Section == section
-                             && q.Subsection == subsection);
-
-if (quiz == null)
-Console.WriteLine("Помилка");
-else
-{
-Subsections.Remove(subsection);
-Console.WriteLine("Вікторина була успішно видалена");
-}
-}*/

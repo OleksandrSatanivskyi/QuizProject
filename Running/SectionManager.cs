@@ -8,11 +8,10 @@ namespace QuizProject
 {
     public class SectionManager: CommandManager, IObjectManager<Section>
     {
-        public SectionManager(List<Section> Sections, List<Quiz> Quizzes, List<Task> Tasks, User currentUser)
+        public SectionManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
         {
             this.Sections = Sections;
             this.Quizzes = Quizzes;
-            this.Tasks = Tasks;
             CurrentUser = currentUser;
             IniCommandsInfo();
         }
