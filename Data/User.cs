@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 
@@ -21,10 +22,10 @@ namespace QuizProject.Data
         public DateTime BirthDate { get; set; }
         public bool IsAdmin { get; set; }
         private string password;
-        public string Password 
+        public string Password
         {
             get => password;
-            set 
+            set
             {
                 Regex regex = new Regex(@"^[1-9][1-9][1-9][1-9]$");
                 if (regex.IsMatch(value))
@@ -33,6 +34,7 @@ namespace QuizProject.Data
                     throw new ArgumentException("Wrong password!");
             }
         }
+        public Dictionary<Task, int> Statistics { get; set; }
 
         public User(string Name, DateTime BirthDate, bool IsAdmin, string Password) 
         {
@@ -44,6 +46,7 @@ namespace QuizProject.Data
             this.BirthDate = BirthDate;
             this.IsAdmin = IsAdmin;
             this.Password = Password;
+            this.Statistics = new Dictionary<Task, int>();
         }
 
         public override string ToString()

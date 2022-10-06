@@ -44,9 +44,7 @@ namespace QuizProject
         }
 
         public void AddTask(Task task) 
-        {
-         Tasks.Add(task);
-        }
+            => Tasks.Add(task);
 
         public Task GetTask(string name) 
         {
