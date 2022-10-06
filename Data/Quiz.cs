@@ -10,6 +10,16 @@ namespace QuizProject
         public int Id;
         public Section Section { get; set; }
         public List<Task> Tasks { get; }
+        public int MaximumScores
+        {
+            get
+            {
+                int result = 0;
+                foreach (var task in Tasks)
+                    result += task.Score;
+                return result;
+            }
+        }
         private static int Count=0;
 
         public Quiz(string Name,Section Section, params Task[] Tasks) 

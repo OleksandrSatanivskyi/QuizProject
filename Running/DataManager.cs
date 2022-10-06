@@ -24,7 +24,7 @@ namespace QuizProject
                 new CommandInfo("Вихід в головне меню", null, AllwaysDisplay),
                 new CommandInfo("Змінити розділ", EditSection, IfCurrentUserIsAdmin),
                 new CommandInfo("Змінити вікторину", EditQuiz, IfCurrentUserIsAdmin),
-                 new CommandInfo("Змінити запитання", EditTask, IfCurrentUserIsAdmin),
+                new CommandInfo("Змінити запитання", EditTask, IfCurrentUserIsAdmin),
             };
         }
 
