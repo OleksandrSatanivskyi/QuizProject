@@ -1,15 +1,15 @@
-﻿using System;
+﻿using QuizProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace QuizProject.Running
 {
     public abstract class CommandManager
     {
+        public User CurrentUser { get; set; }
         public List<Section> Sections { get; protected set; }
-        public List<Subsection> Subsections { get; protected set; }
         public List<Quiz> Quizzes { get; protected set; }
         protected CommandInfo[] commandsInfo;
 
@@ -22,6 +22,7 @@ namespace QuizProject.Running
 
         protected virtual void PrepareRunning() { }
         protected abstract void PrepareScreen();
+        protected abstract void AfterScreen();
 
         public void Run()
         {
@@ -31,15 +32,29 @@ namespace QuizProject.Running
                 PrepareScreen();
                 ShowMenu();
                 CommandInfo commandInfo = SelectCommandInfo();
-                if (commandInfo.Command == null)
+                if (commandInfo.Command == null 
+                    || commandInfo.Display() == false)
                     return;
                 commandInfo.Command();
+                AfterScreen();
             }
         }
-        protected static bool AllwaysDisplay() { return true; }
-        protected bool IfSectionsNotEmpty() { return Sections.Any(); }
-        protected bool IfSubsectionsNotEmpty() { return Subsections.Any(); }
-        protected bool IfQuizzesNotEmpty() { return Quizzes.Any(); }
+
+        protected bool IfUserIsLogined()
+           => this.CurrentUser != null;
+
+        protected bool IfCurrentUserIsAdmin()
+            => IfUserIsLogined() && this.CurrentUser.IsAdmin;
+
+        protected static bool AllwaysDisplay()
+            => true;
+
+        protected bool IfSectionsNotEmpty()  
+            => Sections != null && Sections.Any(); 
+
+        protected bool IfQuizzesNotEmpty()  
+            => Quizzes != null && Quizzes.Any(); 
+
         private void ShowMenu()
         {
             Console.WriteLine("Список команд меню:");
@@ -54,7 +69,7 @@ namespace QuizProject.Running
 
         protected CommandInfo SelectCommandInfo()
         {
-            int num = Entering.EnterInt32("Номер команди",0, commandsInfo.Length - 1);
+            int num = Entering.EnterInt32("Номер команди", 0, commandsInfo.Length - 1);
             return commandsInfo[num];
         }
 

@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
+using QuizProject.Data;
 
 namespace QuizProject
 {
     [Serializable]
     public class DataContext
     {
-        private DataSet dataSet=new DataSet();
+        private DataSet dataSet = new DataSet();
+        public List<User> Users { get; private set; }
         public List<Section> Sections { get; private set; }
-        public List<Subsection> Subsections { get; private set; }
         public List<Quiz> Quizzes { get; private set; }
-        public List<Task> Tasks { get; private set; }
-        private string directoryName = "";
+        private string directoryName = @"C:\Users\" + Environment.UserName + @"\source\repos\QuizProject";
         public string DirectoryName
         {
             get { return directoryName; }
@@ -31,19 +28,16 @@ namespace QuizProject
                 Directory.CreateDirectory(directoryName);
             }
         }
-        public string FileName { get; set; } = "QuizProject.dat";
-        public string FilePath=>Path.Combine(directoryName, FileName);
+        public const string FileName = "QuizProjectData.dat";
+        public string FilePath => Path.Combine(directoryName, FileName);
         public DataContext() 
         {
             Sections = dataSet.Sections;
-            Subsections = dataSet.Subsections;
             Quizzes = dataSet.Quizzes;
-            Tasks = dataSet.Tasks;
         }
         public void CreateTestingData() 
         {
             CreateSections();
-            CreateSubsections();
             CreateTasks();
             CreateQuizzes();
         }
@@ -78,19 +72,9 @@ namespace QuizProject
 
         private void CreateQuizzes()
         {
-            Quizzes.Add(new Quiz("Вікторина на логіку",Subsections[1],Tasks[0], Tasks[1], Tasks[2]));
-            Quizzes.Add(new Quiz("Вікторина на фізику", Subsections[2], Tasks[3], Tasks[4], Tasks[5]));
-            Quizzes.Add(new Quiz("Вікторина на знання історії", Subsections[4], Tasks[6], Tasks[7]));
-        }
-
-        private void CreateSubsections()
-        {
-            Subsections.Add(new Subsection("Математика", Sections[0]));
-            Subsections.Add(new Subsection("Логіка", Sections[0]));
-            Subsections.Add(new Subsection("Фізика", Sections[1]));
-            Subsections.Add(new Subsection("Біологія", Sections[1]));
-            Subsections.Add(new Subsection("Історія", Sections[2]));
-            Subsections.Add(new Subsection("Правознавство", Sections[2]));
+            Quizzes.Add(new Quiz("Вікторина на логіку",Sections[0],Tasks[0], Tasks[1], Tasks[2]));
+            Quizzes.Add(new Quiz("Вікторина на фізику", Sections[1], Tasks[3], Tasks[4], Tasks[5]));
+            Quizzes.Add(new Quiz("Вікторина на знання історії", Sections[2], Tasks[6], Tasks[7]));
         }
 
         private void CreateSections()
@@ -103,17 +87,17 @@ namespace QuizProject
         {
             return string.Concat("Дані програми:\n",
                Sections.ToLineList("  Розділи"),
-               Subsections.ToLineList("  Підрозділи"),
-               Quizzes.ToLineList("  Вікторини")
-               );
+               Quizzes.ToLineList("  Вікторини"));
         }
+
         public void Save() 
         { 
             BinaryFormatter bFormatter= new BinaryFormatter();
-            using (FileStream fstream=new FileStream(FileName, FileMode.Create,
+            using (FileStream fstream=new FileStream(FilePath, FileMode.OpenOrCreate,
                 FileAccess.Write, FileShare.None)) 
             bFormatter.Serialize(fstream, dataSet);
         }
+
         public void Load() 
         {
             if (!File.Exists(FilePath))
@@ -121,10 +105,15 @@ namespace QuizProject
             BinaryFormatter bFormatter= new BinaryFormatter();
             using (FileStream fstream = File.OpenRead(FilePath))
                 dataSet=(DataSet)bFormatter.Deserialize(fstream);
+            Users = dataSet.Users;
             Sections = dataSet.Sections;
-            Subsections = dataSet.Subsections;
             Quizzes = dataSet.Quizzes;
-            Tasks = dataSet.Tasks;
+            if (Users == null)
+                Users = new List<User>();
+            if (Sections == null)
+                Sections = new List<Section>();
+            if (Quizzes == null)
+                Quizzes = new List<Quiz>();
         }
     }
 }

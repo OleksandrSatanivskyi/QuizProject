@@ -1,9 +1,6 @@
 ﻿using QuizProject.Running;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizProject
 {
@@ -11,12 +8,20 @@ namespace QuizProject
     {
         static void Main(string[] args)
         {
+            //добавити логіку IsAdmin в усі Manager
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
-
-            MainManager mainManager = new MainManager();
-  
-            mainManager.Run();
+            try
+            {
+                MainManager mainManager = new MainManager();
+                mainManager.Run();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+            
         }
     }
 }

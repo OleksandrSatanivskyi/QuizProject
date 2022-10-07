@@ -1,58 +1,49 @@
 ﻿using QuizProject.Running;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizProject
 {
     public class DataManager : CommandManager
     {
-        SubsectionManager subsectionEditor;
-        SectionManager sectionEditor;
-        QuizManager quizEdutor;
+        SectionManager sectionManager;
+        QuizManager quizManager;
+        TaskManager taskManager;
+
         public DataManager(DataContext dataContext) 
         {
-            Sections=dataContext.Sections;
-            Subsections=dataContext.Subsections;
-            Quizzes=dataContext.Quizzes;
-            subsectionEditor = new SubsectionManager(Sections, Subsections, Quizzes);
-            sectionEditor = new SectionManager(Sections, Subsections, Quizzes);
-            quizEdutor = new QuizManager(Sections, Subsections, Quizzes);
-
-
-
+            Sections = dataContext.Sections;
+            Quizzes = dataContext.Quizzes;
+            sectionManager = new SectionManager(Sections, Quizzes, CurrentUser);
+            quizManager = new QuizManager(Sections, Quizzes, CurrentUser);
+            taskManager = new TaskManager(Sections, Quizzes, CurrentUser);
         }
+
         protected override void IniCommandsInfo()
         {
             commandsInfo = new CommandInfo[] {
                 new CommandInfo("Вихід в головне меню", null, AllwaysDisplay),
-                new CommandInfo("Змінити розділ", EditSection, AllwaysDisplay),
-                  new CommandInfo("Змінити підрозділ", EditSubsection, AllwaysDisplay),
-                  new CommandInfo("Змінити вікторину", EditQuiz, AllwaysDisplay),
+                new CommandInfo("Змінити розділ", EditSection, IfCurrentUserIsAdmin),
+                new CommandInfo("Змінити вікторину", EditQuiz, IfCurrentUserIsAdmin),
+                new CommandInfo("Змінити запитання", EditTask, IfCurrentUserIsAdmin),
             };
         }
 
-        private void EditSubsection()
-        {
-            subsectionEditor.Run();
-        }
+        private void EditTask()
+            => taskManager.Run();
 
         private void EditSection()
-        {
-            sectionEditor.Run();
-        }
+            => sectionManager.Run();
         
         private void EditQuiz()
-        {
-            quizEdutor.Run();
-        }
-        
+            => quizManager.Run();
 
         protected override void PrepareScreen()
+            => Console.Clear();
+
+        protected override void AfterScreen()
         {
-            Console.Clear();
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
         }
     }
 }

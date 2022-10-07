@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizProject.Running
 {
@@ -10,11 +7,11 @@ namespace QuizProject.Running
     {
         public TextManager(DataContext dataContext) 
         {
-            Sections=dataContext.Sections;
-            Subsections=dataContext.Subsections;
-            Quizzes=dataContext.Quizzes;
+            Sections = dataContext.Sections;
+            Quizzes = dataContext.Quizzes;
         }
-        private bool IfMoreThenOneQuiz() { return Quizzes.Count > 1; }
+        private bool IfMoreThenOneQuiz()
+            =>IfQuizzesNotEmpty() && Quizzes.Count > 1; 
         protected override void IniCommandsInfo()
         {
             commandsInfo = new CommandInfo[]
@@ -22,7 +19,6 @@ namespace QuizProject.Running
                 new CommandInfo("до головного меню", null, AllwaysDisplay),
                 new CommandInfo("статистика", Statistic, IfSectionsNotEmpty, true),
                 new CommandInfo("вивести дані про розділи", WriteSections, IfSectionsNotEmpty),
-                new CommandInfo("вивести дані про підрозділи", WriteSubsections, IfSubsectionsNotEmpty),
                 new CommandInfo("вивести дані про вікторини", WriteQuizzes, IfQuizzesNotEmpty),
                 new CommandInfo("сортувати вікторини за назвою", SortByName, IfMoreThenOneQuiz),
                 new CommandInfo("сортувати вікторини за розділом і підрозділом", SortByParentName, IfMoreThenOneQuiz),
@@ -43,7 +39,7 @@ namespace QuizProject.Running
        
         private void SortByParentName()
         {
-            Quizzes = (List<Quiz>)Quizzes.OrderBy(e => e.Section).ThenBy(e=>e.Subsection);
+            Quizzes = Quizzes.OrderBy(e => e.Section.Name).ToList();
             Console.WriteLine("Відсортовані вікторини:");
             foreach (var quiz in Quizzes)
             {
@@ -66,11 +62,6 @@ namespace QuizProject.Running
             Console.WriteLine(Quizzes.ToLineList<Quiz>("Вікторини", "\n "));
         }
 
-        private void WriteSubsections()
-        {
-            Console.WriteLine(Subsections.ToLineList<Subsection>("Підрозділи", "\n "));
-        }
-
         private void WriteSections()
         {
             Console.WriteLine(Sections.ToLineList<Section>("Розділи", "\n "));
@@ -79,13 +70,17 @@ namespace QuizProject.Running
         {
             Console.WriteLine("Статистика:");
             Console.WriteLine($"\t{ "Розділів:", -10} {Sections.Count}");
-            Console.WriteLine($"\t{ "Підрозділів:",-10} {Subsections.Count}");
             Console.WriteLine($"\t{ "Вікторин:",-10} {Quizzes.Count}");
         }
 
         protected override void PrepareScreen()
         {
             Console.Clear();
+        }
+        protected override void AfterScreen()
+        {
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
         }
     }
 }
