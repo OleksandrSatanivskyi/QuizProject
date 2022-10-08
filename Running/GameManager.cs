@@ -122,10 +122,11 @@ namespace QuizProject.Running
                         answerOptions[i] = tmp;
                     }
 
+                    Console.Clear();
                     for (int i = 0; i < answerOptions.Count; i++)
                         Console.WriteLine("\t" + (i + 1) + " - " + answerOptions[i]);
                     Console.WriteLine( "\t0 - вихід");
-                    Console.Write("Ваша відповідь:");
+                    Console.Write("Ваша відповідь: ");
                     string key = Console.ReadLine();
                     if (int.Parse(key) - 1 >= 0 && int.Parse(key) <= answerOptions.Count)
                     {
@@ -140,7 +141,6 @@ namespace QuizProject.Running
                             Console.WriteLine("Ваша відповідь не правильна");
                         Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
                         Console.ReadKey(true);
-                        Console.Clear();
                     }
                 }
                 Console.WriteLine("Вікторина пройдена");
