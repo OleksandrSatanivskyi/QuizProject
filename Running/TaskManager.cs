@@ -90,7 +90,7 @@ namespace QuizProject.Running
 
             Console.WriteLine("Введіть назву запитання");
             string taskName = Console.ReadLine();
-            var task = quiz.Tasks.SingleOrDefault(t => t.Name == taskName);
+            var task = quiz.Tasks?.SingleOrDefault(t => t.Name == taskName);
 
             return task;
         }
@@ -166,6 +166,9 @@ namespace QuizProject.Running
             => Console.Clear();
 
         protected override void AfterScreen()
-            => Console.ReadKey();
+        {
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
+        }
     }
 }

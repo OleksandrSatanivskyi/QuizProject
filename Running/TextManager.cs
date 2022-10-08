@@ -8,9 +8,10 @@ namespace QuizProject.Running
     {
         public TextManager(DataContext dataContext, User currentUser) 
         {
+            Users = dataContext.dataSet.Users;
             CurrentUser = currentUser;
-            Sections = dataContext.Sections;
-            Quizzes = dataContext.Quizzes;
+            Sections = dataContext.dataSet.Sections;
+            Quizzes = dataContext.dataSet.Quizzes;
         }
         private bool IfMoreThenOneQuiz()
             =>IfQuizzesNotEmpty() && Quizzes.Count > 1; 

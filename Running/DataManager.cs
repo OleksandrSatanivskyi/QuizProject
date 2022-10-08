@@ -12,9 +12,10 @@ namespace QuizProject
 
         public DataManager(DataContext dataContext, User currentUser) 
         {
+            Users = dataContext.dataSet.Users;
             CurrentUser = CurrentUser;
-            Sections = dataContext.Sections;
-            Quizzes = dataContext.Quizzes;
+            Sections = dataContext.dataSet.Sections;
+            Quizzes = dataContext.dataSet.Quizzes;
             sectionManager = new SectionManager(Sections, Quizzes, CurrentUser);
             quizManager = new QuizManager(Sections, Quizzes, CurrentUser);
             taskManager = new TaskManager(Sections, Quizzes, CurrentUser);

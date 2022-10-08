@@ -10,8 +10,20 @@ namespace QuizProject.Running
     internal class GameManager : CommandManager
     {
 
+        public GameManager(DataContext dataContext, User currentUser)
+        {
+            Users = dataContext.dataSet.Users;
+            CurrentUser = currentUser;
+            Sections = dataContext.dataSet.Sections;
+            Quizzes = dataContext.dataSet.Quizzes;
+            IniCommandsInfo();
+        }
+
         protected override void AfterScreen()
-            => Console.ReadKey();
+        {
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
+        }
 
         protected override void IniCommandsInfo()
         {
@@ -63,31 +75,55 @@ namespace QuizProject.Running
 
             Console.WriteLine("Введіть назву вікторини");
             string quizName = Console.ReadLine();
-            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+            var quiz = Quizzes?.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
             return quiz;
         }
 
         private void CountOfTakenQuizStatistic()
         {
+            var usersStatistic = new Dictionary<User, int>();
             var takenQuizzes = new List<Quiz>();
-            foreach (var s in CurrentUser.Statistics)
-                if (s.Value == s.Key.MaximumScores)
-                    takenQuizzes.Add(s.Key);
 
-            takenQuizzes.OrderBy(q => q.Name);
+            foreach (var user in Users)
+            {
+                foreach (var s in user.Statistics)
+                    if (s.Value == s.Key.MaximumScores)
+                        takenQuizzes.Add(s.Key);
+                usersStatistic.Add(user, takenQuizzes.Count);
+            }
 
-            Console.WriteLine("Пройдених вікторин: " + takenQuizzes.Count);
-            for (int i = 0; i < takenQuizzes.Count; i++)
-                Console.WriteLine("\t" + (i + 1) + " - " + takenQuizzes[i]);
+            foreach (var s in usersStatistic)
+                Console.WriteLine(s.Key + " - " + s.Value);
         }
 
         private void TakeQuiz()
         {
-            throw new NotImplementedException();
-        }
+            var quiz = this.GetQuiz();
 
+            if (quiz == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                
+            }
+        }
+        
         protected override void PrepareScreen()
            => Console.Clear();
     }
 }
+
+/*
+ var takenQuizzes = new List<Quiz>();
+            foreach (var user in Users)
+                foreach (var s in user.Statistics)
+                    if (s.Value == s.Key.MaximumScores)
+                        takenQuizzes.Add(s.Key);
+
+             
+
+            Console.WriteLine("Пройдених вікторин: " + takenQuizzes.Count);
+            for (int i = 0; i < takenQuizzes.Count; i++)
+                Console.WriteLine("\t" + (i + 1) + " - " + takenQuizzes[i]);
+ */

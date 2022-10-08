@@ -48,7 +48,7 @@ namespace QuizProject
         {
             Console.WriteLine("Введіть назву розділу");
             string name = Console.ReadLine();
-            var section = Sections.SingleOrDefault(s => s.Name == name);
+            var section = Sections?.SingleOrDefault(s => s.Name == name);
             return section;
         }
 

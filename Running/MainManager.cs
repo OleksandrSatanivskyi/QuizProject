@@ -20,10 +20,10 @@ namespace QuizProject.Running
         }
 
         private bool IfDataContextNotEmpty() 
-            => !dataContext.Sections.Any() || dataContext.Sections == null; 
+            => !dataContext.dataSet.Sections.Any() || dataContext.dataSet.Sections == null; 
 
         private bool IfDataContextEmpty() 
-            => dataContext.Sections.Any(); 
+            => dataContext.dataSet.Sections.Any(); 
 
         protected override void IniCommandsInfo()
         {
@@ -31,7 +31,7 @@ namespace QuizProject.Running
                 new CommandInfo("Вихід", null, AllwaysDisplay),
                 new CommandInfo("Вибрати/змінити користувача", SelectCurrentUser, AllwaysDisplay),
                 new CommandInfo("Проходження вікторин", TakingQuizzes, IfUserIsLogined),
-                new CommandInfo("Створити тестові дані", CreateTestingdata, IfUserIsLogined),
+                new CommandInfo("Створити тестові дані", CreateTestingdata, AllwaysDisplay),
                 new CommandInfo("Дані як текст", DataAsText, IfDataContextEmpty),
                 new CommandInfo("Редагувати дані", EditData , IfCurrentUserIsAdmin),
                 new CommandInfo("Зберегти зміни", Save , IfUserIsLogined, true),
@@ -45,12 +45,13 @@ namespace QuizProject.Running
 
         private void SelectCurrentUser()
         {
-            Users = dataContext.Users;
+            Users = dataContext.dataSet.Users;
             CurrentUser = UserMethods.SelectUser(Users);
             if(!Users.Contains(CurrentUser))
-                Users.Add(CurrentUser);
+                dataContext.dataSet.Users.Add(CurrentUser);
             dataManager.CurrentUser = this.CurrentUser;
             textManager.CurrentUser = this.CurrentUser;
+            gameManager.CurrentUser = this.CurrentUser;
         }
 
         private void Save()

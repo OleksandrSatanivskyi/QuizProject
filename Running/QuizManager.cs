@@ -55,7 +55,7 @@ namespace QuizProject
 
             Console.WriteLine("Введіть назву вікторини");
             string quizName = Console.ReadLine();
-            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+            var quiz = Quizzes?.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
             return quiz;
         }
@@ -101,7 +101,7 @@ namespace QuizProject
                 Console.WriteLine("Помилка");
             else 
             {
-                quiz.Section=newSection;
+                quiz.Section = newSection;
                 Console.WriteLine("Розділ був успішно змінений");
             }
         }
@@ -110,7 +110,10 @@ namespace QuizProject
             => Console.Clear();
         
         protected override void AfterScreen()
-            => Console.ReadKey();
+        {
+            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+            Console.ReadKey();
+        }
 
 
     }
