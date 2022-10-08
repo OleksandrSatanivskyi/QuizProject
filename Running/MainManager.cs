@@ -30,7 +30,7 @@ namespace QuizProject.Running
                 new CommandInfo("Вибрати/змінити користувача", SelectCurrentUser, AllwaysDisplay),
                 new CommandInfo("Проходження вікторин", TakingQuizzes, IfUserIsLogined),
                 new CommandInfo("Створити тестові дані", CreateTestingdata, IfDataContextNotEmpty),
-                new CommandInfo("Дані як текст", DataAsText, IfDataContextEmpty),
+                new CommandInfo("Дані як текст", DataAsText, IfUserIsLogined),
                 new CommandInfo("Редагувати дані", EditData , IfCurrentUserIsAdmin),
                 new CommandInfo("Зберегти зміни", Save , IfUserIsLogined, true),
             };

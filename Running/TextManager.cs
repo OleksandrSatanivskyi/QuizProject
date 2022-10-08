@@ -62,12 +62,19 @@ namespace QuizProject.Running
 
         private void WriteQuizzes()
         {
-            Console.WriteLine(Quizzes.ToLineList<Quiz>("Вікторини", "\n "));
+            foreach (var s in Sections)
+            {
+                Console.WriteLine(s);
+                var quizzes = Quizzes.Where(q => q.Section == s);
+                foreach (var q in quizzes)
+                    Console.WriteLine("\t" + q);
+            }
+            //Console.WriteLine(Quizzes.ToLineList<Quiz>("Вікторини", "\n\t"));
         }
 
         private void WriteSections()
         {
-            Console.WriteLine(Sections.ToLineList<Section>("Розділи", "\n "));
+            Console.WriteLine(Sections.ToLineList<Section>("Розділи", "\n\t"));
         }
         private void Statistic()
         {
