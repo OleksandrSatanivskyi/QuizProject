@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,17 +33,26 @@ namespace QuizProject.Running
 
         private void QuizStatistic()
         {
-            //var quiz = this.GetQuiz();
+            var quiz = this.GetQuiz();
 
-            //if (quiz == null)
-            //    Console.WriteLine("Помилка");
-            //else
-            //{
-            //    foreach (var item in Users)
-            //    {
+            if (quiz == null)
+                Console.WriteLine("Помилка");
+            else
+            {
+                var statistic = new Dictionary<User, int>();
+                foreach (var user in Users)
+                    if(user.Statistics.ContainsKey(quiz))
+                        statistic.Add(user, user.Statistics[quiz]);
+                statistic = statistic.OrderByDescending(s => s.Value).ToDictionary(s => s.Key, s => s.Value);
 
-            //    }
-            //}
+                Console.WriteLine(quiz + ":");
+                int count = 1;
+                foreach (var s in statistic)
+                {
+                    Console.WriteLine("\t" + count + ": " + s.Key + " - " + s.Value);
+                    count++;
+                }
+            }
         }
 
         private Quiz GetQuiz() 
@@ -60,7 +70,10 @@ namespace QuizProject.Running
 
         private void CountOfTakenQuizStatistic()
         {
-            throw new NotImplementedException();
+            //var takenQuizzes = new List<Quiz>();
+            //foreach (var s in CurrentUser.Statistics)
+            //    if(s.Value == s.Key.MaximumScores)
+            //        takenQuizzes.Add(s.Key);
         }
 
         private void TakeQuiz()
