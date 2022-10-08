@@ -105,7 +105,48 @@ namespace QuizProject.Running
                 Console.WriteLine("Помилка");
             else
             {
-                
+                int Count = 0;
+                foreach (var task in quiz.Tasks)
+                {
+                    Console.WriteLine(task.Question);
+
+                    var answerOptions = new List<string>();
+                    answerOptions.AddRange(task.AnswerOptions);
+                    answerOptions.Add(task.CorrectAnswer);
+                    Random rand = new Random();
+                    for (int i = answerOptions.Count - 1; i >= 1; i--)
+                    {
+                        int j = rand.Next(i + 1);
+                        string tmp = answerOptions[j];
+                        answerOptions[j] = answerOptions[i];
+                        answerOptions[i] = tmp;
+                    }
+
+                    for (int i = 0; i < answerOptions.Count; i++)
+                        Console.WriteLine("\t" + (i + 1) + " - " + answerOptions[i]);
+                    Console.WriteLine( "\t0 - вихід");
+                    Console.Write("Ваша відповідь:");
+                    string key = Console.ReadLine();
+                    if (int.Parse(key) - 1 >= 0 && int.Parse(key) <= answerOptions.Count)
+                    {
+                        if (int.Parse(key) == 0)
+                            return;
+                        if (answerOptions[int.Parse(key) - 1] == task.CorrectAnswer)
+                        {
+                            Count += task.Score;
+                            Console.WriteLine($"Ваша відповідь правильна. Ви отримуєте +{Count} балів");
+                        }
+                        else
+                            Console.WriteLine("Ваша відповідь не правильна");
+                        Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
+                        Console.ReadKey(true);
+                        Console.Clear();
+                    }
+                }
+                Console.WriteLine("Вікторина пройдена");
+                Console.WriteLine($"Ваша кількість балів: {Count} з {quiz.MaximumScores}");
+
+                CurrentUser.Statistics.Add(quiz, Count);
             }
         }
         
@@ -113,17 +154,3 @@ namespace QuizProject.Running
            => Console.Clear();
     }
 }
-
-/*
- var takenQuizzes = new List<Quiz>();
-            foreach (var user in Users)
-                foreach (var s in user.Statistics)
-                    if (s.Value == s.Key.MaximumScores)
-                        takenQuizzes.Add(s.Key);
-
-             
-
-            Console.WriteLine("Пройдених вікторин: " + takenQuizzes.Count);
-            for (int i = 0; i < takenQuizzes.Count; i++)
-                Console.WriteLine("\t" + (i + 1) + " - " + takenQuizzes[i]);
- */

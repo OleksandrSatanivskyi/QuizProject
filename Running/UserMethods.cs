@@ -78,7 +78,7 @@ namespace QuizProject
 
             Console.WriteLine("Новий користувач буде адміном?");
             Console.WriteLine("1 - так\n" 
-                +"0 - ні");
+                            + "0 - ні");
             var key = Console.ReadLine();
             if (key != "1"
                 && key != "0")

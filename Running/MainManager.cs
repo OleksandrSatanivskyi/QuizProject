@@ -29,7 +29,7 @@ namespace QuizProject.Running
                 new CommandInfo("Вихід", null, AllwaysDisplay),
                 new CommandInfo("Вибрати/змінити користувача", SelectCurrentUser, AllwaysDisplay),
                 new CommandInfo("Проходження вікторин", TakingQuizzes, IfUserIsLogined),
-                new CommandInfo("Створити тестові дані", CreateTestingdata, AllwaysDisplay),
+                new CommandInfo("Створити тестові дані", CreateTestingdata, IfDataContextNotEmpty),
                 new CommandInfo("Дані як текст", DataAsText, IfDataContextEmpty),
                 new CommandInfo("Редагувати дані", EditData , IfCurrentUserIsAdmin),
                 new CommandInfo("Зберегти зміни", Save , IfUserIsLogined, true),
@@ -37,9 +37,7 @@ namespace QuizProject.Running
         }
 
         private void TakingQuizzes()
-        {
-            throw new NotImplementedException();
-        }
+            => gameManager.Run();
 
         private void SelectCurrentUser()
         {
