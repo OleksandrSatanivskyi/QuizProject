@@ -8,7 +8,6 @@ namespace QuizProject
     {
         static void Main(string[] args)
         {
-            //добавити логіку IsAdmin в усі Manager
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
             try

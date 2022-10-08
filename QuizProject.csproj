@@ -51,6 +51,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Quiz.cs" />
+    <Compile Include="Running\GameManager.cs" />
     <Compile Include="Running\IObjectManager.cs" />
     <Compile Include="Running\QuizManager.cs" />
     <Compile Include="Running\CommandInfo.cs" />

@@ -9,6 +9,7 @@ namespace QuizProject.Running
     public abstract class CommandManager
     {
         public User CurrentUser { get; set; }
+        public List<User> Users { get; protected set; }
         public List<Section> Sections { get; protected set; }
         public List<Quiz> Quizzes { get; protected set; }
         protected CommandInfo[] commandsInfo;

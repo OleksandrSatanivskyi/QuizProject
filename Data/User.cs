@@ -34,7 +34,7 @@ namespace QuizProject.Data
                     throw new ArgumentException("Wrong password!");
             }
         }
-        public Dictionary<Task, int> Statistics { get; set; }
+        public Dictionary<Quiz, int> Statistics { get; set; }
 
         public User(string Name, DateTime BirthDate, bool IsAdmin, string Password) 
         {
@@ -46,7 +46,7 @@ namespace QuizProject.Data
             this.BirthDate = BirthDate;
             this.IsAdmin = IsAdmin;
             this.Password = Password;
-            this.Statistics = new Dictionary<Task, int>();
+            this.Statistics = new Dictionary<Quiz, int>();
         }
 
         public override string ToString()

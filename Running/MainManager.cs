@@ -8,7 +8,6 @@ namespace QuizProject.Running
     public class MainManager : CommandManager
     {
         private DataContext dataContext = new DataContext();
-        public List<User> Users { get; set; }
         private DataManager dataManager { get; set; }
         private TextManager textManager { get; set; }
         public MainManager()
