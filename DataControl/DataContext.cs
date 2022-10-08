@@ -11,9 +11,6 @@ namespace QuizProject
     public class DataContext
     {
         public DataSet dataSet { get; private set; }
-        //public List<User> Users { get; private set; }
-        //public List<Section> Sections { get; private set; }
-        //public List<Quiz> Quizzes { get; private set; }
         private string directoryName = @"C:\Users\" + Environment.UserName + @"\source\repos\QuizProject";
         public string DirectoryName
         {
@@ -33,8 +30,6 @@ namespace QuizProject
         public DataContext() 
         {
             dataSet = new DataSet();
-            //Sections = dataSet.Sections;
-            //Quizzes = dataSet.Quizzes;
         }
         public void CreateTestingData() 
         {

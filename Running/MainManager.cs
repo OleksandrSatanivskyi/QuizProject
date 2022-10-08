@@ -14,9 +14,7 @@ namespace QuizProject.Running
         public MainManager()
         {
             dataContext.Load();
-            dataManager = new DataManager(dataContext, CurrentUser);
-            textManager = new TextManager(dataContext, CurrentUser);
-            gameManager = new GameManager(dataContext, CurrentUser);
+            
         }
 
         private bool IfDataContextNotEmpty() 
@@ -49,9 +47,9 @@ namespace QuizProject.Running
             CurrentUser = UserMethods.SelectUser(Users);
             if(!Users.Contains(CurrentUser))
                 dataContext.dataSet.Users.Add(CurrentUser);
-            dataManager.CurrentUser = this.CurrentUser;
-            textManager.CurrentUser = this.CurrentUser;
-            gameManager.CurrentUser = this.CurrentUser;
+            dataManager = new DataManager(dataContext, CurrentUser);
+            textManager = new TextManager(dataContext, CurrentUser);
+            gameManager = new GameManager(dataContext, CurrentUser);
         }
 
         private void Save()

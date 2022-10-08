@@ -89,8 +89,6 @@ namespace QuizProject
             Console.ReadKey();
         }
 
-        protected override void PrepareRunning()
-            => Console.ReadKey(true);
     }
 }
 /*public void DeleteSection()

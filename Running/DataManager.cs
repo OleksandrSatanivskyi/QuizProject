@@ -13,7 +13,7 @@ namespace QuizProject
         public DataManager(DataContext dataContext, User currentUser) 
         {
             Users = dataContext.dataSet.Users;
-            CurrentUser = CurrentUser;
+            CurrentUser = currentUser;
             Sections = dataContext.dataSet.Sections;
             Quizzes = dataContext.dataSet.Quizzes;
             sectionManager = new SectionManager(Sections, Quizzes, CurrentUser);

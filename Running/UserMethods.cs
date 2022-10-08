@@ -16,7 +16,7 @@ namespace QuizProject
             }
             Console.WriteLine("Введіть ім'я користувача");
             string userName = Console.ReadLine();
-            var user = Users.SingleOrDefault(u => u.Name == userName);
+            var user = Users?.SingleOrDefault(u => u.Name == userName);
 
             if (user == null)
             {
@@ -32,7 +32,7 @@ namespace QuizProject
                     if (key.Key == ConsoleKey.D0)
                         return null;
                     else
-                        Console.WriteLine("Помилка");
+                        throw new ArgumentNullException("Error");
                 }
             }
             else
