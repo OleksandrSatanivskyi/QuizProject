@@ -1,12 +1,14 @@
-﻿using System;
+﻿using QuizProject.Data;
+using System;
 using System.Linq;
 
 namespace QuizProject.Running
 {
     public class TextManager : CommandManager
     {
-        public TextManager(DataContext dataContext) 
+        public TextManager(DataContext dataContext, User currentUser) 
         {
+            CurrentUser = currentUser;
             Sections = dataContext.Sections;
             Quizzes = dataContext.Quizzes;
         }

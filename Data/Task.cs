@@ -34,6 +34,6 @@ namespace QuizProject
             AnswerOptions.AddRange(Options);
         }
         public override string ToString()
-            => Name;
+            => this.Name;
     }
 }

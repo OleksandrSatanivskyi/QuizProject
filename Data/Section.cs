@@ -19,10 +19,7 @@ namespace QuizProject
         }
 
         public override string ToString()
-        {
-            return $"{Name}" +
-                $"\n\tId: {Id}";
-        }
+            =>this.Name;
 
         internal void Rename(string newName)
             => Name = newName;

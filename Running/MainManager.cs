@@ -10,11 +10,13 @@ namespace QuizProject.Running
         private DataContext dataContext = new DataContext();
         private DataManager dataManager { get; set; }
         private TextManager textManager { get; set; }
+        private GameManager gameManager { get; set; }
         public MainManager()
         {
             dataContext.Load();
-            dataManager = new DataManager(dataContext);
-            textManager = new TextManager(dataContext);
+            dataManager = new DataManager(dataContext, CurrentUser);
+            textManager = new TextManager(dataContext, CurrentUser);
+            gameManager = new GameManager(dataContext, CurrentUser);
         }
 
         private bool IfDataContextNotEmpty() 
@@ -28,11 +30,17 @@ namespace QuizProject.Running
             commandsInfo = new CommandInfo[] {
                 new CommandInfo("Вихід", null, AllwaysDisplay),
                 new CommandInfo("Вибрати/змінити користувача", SelectCurrentUser, AllwaysDisplay),
+                new CommandInfo("Проходження вікторин", TakingQuizzes, IfUserIsLogined),
                 new CommandInfo("Створити тестові дані", CreateTestingdata, IfUserIsLogined),
                 new CommandInfo("Дані як текст", DataAsText, IfDataContextEmpty),
                 new CommandInfo("Редагувати дані", EditData , IfCurrentUserIsAdmin),
                 new CommandInfo("Зберегти зміни", Save , IfUserIsLogined, true),
             };
+        }
+
+        private void TakingQuizzes()
+        {
+            throw new NotImplementedException();
         }
 
         private void SelectCurrentUser()

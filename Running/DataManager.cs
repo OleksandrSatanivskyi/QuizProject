@@ -1,4 +1,5 @@
-﻿using QuizProject.Running;
+﻿using QuizProject.Data;
+using QuizProject.Running;
 using System;
 
 namespace QuizProject
@@ -9,8 +10,9 @@ namespace QuizProject
         QuizManager quizManager;
         TaskManager taskManager;
 
-        public DataManager(DataContext dataContext) 
+        public DataManager(DataContext dataContext, User currentUser) 
         {
+            CurrentUser = CurrentUser;
             Sections = dataContext.Sections;
             Quizzes = dataContext.Quizzes;
             sectionManager = new SectionManager(Sections, Quizzes, CurrentUser);

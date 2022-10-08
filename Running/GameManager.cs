@@ -70,10 +70,16 @@ namespace QuizProject.Running
 
         private void CountOfTakenQuizStatistic()
         {
-            //var takenQuizzes = new List<Quiz>();
-            //foreach (var s in CurrentUser.Statistics)
-            //    if(s.Value == s.Key.MaximumScores)
-            //        takenQuizzes.Add(s.Key);
+            var takenQuizzes = new List<Quiz>();
+            foreach (var s in CurrentUser.Statistics)
+                if (s.Value == s.Key.MaximumScores)
+                    takenQuizzes.Add(s.Key);
+
+            takenQuizzes.OrderBy(q => q.Name);
+
+            Console.WriteLine("Пройдених вікторин: " + takenQuizzes.Count);
+            for (int i = 0; i < takenQuizzes.Count; i++)
+                Console.WriteLine("\t" + (i + 1) + " - " + takenQuizzes[i]);
         }
 
         private void TakeQuiz()

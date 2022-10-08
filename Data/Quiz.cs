@@ -63,9 +63,6 @@ namespace QuizProject
         }
 
         public override string ToString()
-        {
-            return $"{Name}\n\tId: {Id}" +
-                $"\n\tРозділ: {Section.Name}";
-        }
+            => this.Name;
     }
 }
