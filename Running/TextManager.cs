@@ -69,7 +69,6 @@ namespace QuizProject.Running
                 foreach (var q in quizzes)
                     Console.WriteLine("\t" + q);
             }
-            //Console.WriteLine(Quizzes.ToLineList<Quiz>("Вікторини", "\n\t"));
         }
 
         private void WriteSections()

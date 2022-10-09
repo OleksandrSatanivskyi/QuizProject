@@ -108,6 +108,7 @@ namespace QuizProject.Running
                 int Count = 0;
                 foreach (var task in quiz.Tasks)
                 {
+                    Console.Clear();
                     Console.WriteLine(task.Question);
 
                     var answerOptions = new List<string>();
@@ -122,7 +123,6 @@ namespace QuizProject.Running
                         answerOptions[i] = tmp;
                     }
 
-                    Console.Clear();
                     for (int i = 0; i < answerOptions.Count; i++)
                         Console.WriteLine("\t" + (i + 1) + " - " + answerOptions[i]);
                     Console.WriteLine( "\t0 - вихід");
@@ -135,7 +135,7 @@ namespace QuizProject.Running
                         if (answerOptions[int.Parse(key) - 1] == task.CorrectAnswer)
                         {
                             Count += task.Score;
-                            Console.WriteLine($"Ваша відповідь правильна. Ви отримуєте +{Count} балів");
+                            Console.WriteLine($"Ваша відповідь правильна. Ви отримуєте +{task.Score} балів");
                         }
                         else
                             Console.WriteLine("Ваша відповідь не правильна");
