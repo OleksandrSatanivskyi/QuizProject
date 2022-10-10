@@ -40,7 +40,7 @@ namespace QuizProject
         private void CreateQuizzes()
         {
             #region Quiz1
-            var quiz1 = new Quiz("Вікторина на логіку", dataSet.Sections[0]);
+            var quiz1 = new Quiz("Логіка", dataSet.Sections[0]);
             var currentTask = new Task("Логіка 1", "Що вийде при логічному додаванні 1 та 0 ?", "1",
                 new List<string> { "0", "2", "4" }, 1);
             quiz1.AddTask(currentTask);
@@ -55,7 +55,7 @@ namespace QuizProject
             #endregion
 
             #region Quiz2
-            var quiz2 = new Quiz("Вікторина на фізику", dataSet.Sections[1]);
+            var quiz2 = new Quiz("Фізика", dataSet.Sections[1]);
             currentTask = new Task("Запитання 1", "Зміна з часом положення тіла або частин тіла в просторі відносно інших тіл це", "Механічний рух",
                 new List<string> { "Тіло відліку", "Система відліку", "Траєкторія руху" }, 1);
             quiz2.AddTask(currentTask);
@@ -88,7 +88,7 @@ namespace QuizProject
             #endregion
 
             #region Quiz3
-            var quiz3 = new Quiz("Вікторина на знання історії", dataSet.Sections[2]);
+            var quiz3 = new Quiz("Історія", dataSet.Sections[2]);
             currentTask = new Task("Історія 1", "Який навчальний заклад вважають найдавнішим у Східній Європі?", "Києво-Могилянська академія",
                 new List<string> { "Київський Видавничо-поліграфічний інститут",
                     "Національний медичний університет імені Богомольця", "Консерваторія імені Глінки" }, 1);

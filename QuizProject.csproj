@@ -53,6 +53,7 @@
     <Compile Include="Data\Quiz.cs" />
     <Compile Include="Running\GameManager.cs" />
     <Compile Include="Running\IObjectManager.cs" />
+    <Compile Include="Running\IUserCreator.cs" />
     <Compile Include="Running\QuizManager.cs" />
     <Compile Include="Running\CommandInfo.cs" />
     <Compile Include="Running\CommandManager.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Data\Section.cs" />
     <Compile Include="Running\SectionManager.cs" />
     <Compile Include="Data\Task.cs" />
+    <Compile Include="Running\UserCreator.cs" />
     <Compile Include="Running\UserMethods.cs" />
   </ItemGroup>
   <ItemGroup>
