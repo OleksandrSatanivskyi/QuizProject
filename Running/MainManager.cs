@@ -14,7 +14,6 @@ namespace QuizProject.Running
         public MainManager()
         {
             dataContext.Load();
-            
         }
 
         private bool IfDataContextNotEmpty() 
@@ -42,7 +41,8 @@ namespace QuizProject.Running
         private void SelectCurrentUser()
         {
             Users = dataContext.dataSet.Users;
-            CurrentUser = UserMethods.SelectUser(Users);
+            UserCreator userCreator = new UserCreator(Users);
+            CurrentUser = userCreator.CreateUser();
             if(!Users.Contains(CurrentUser))
                 dataContext.dataSet.Users.Add(CurrentUser);
             dataManager = new DataManager(dataContext, CurrentUser);
