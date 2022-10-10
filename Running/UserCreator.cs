@@ -26,20 +26,66 @@ namespace QuizProject.Running
                 return CreateNewUser();
             }
             else
-                return UserAutorization();
+                return ExistingUserAutorization();
         }
 
         private User ExistingUserAutorization()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Введіть ім'я користувача");
+            string username = Console.ReadLine();
+            var user = Users?.SingleOrDefault(u => u.Name == username);
+
+            if (user == null)
+            {
+                Console.WriteLine("Користувача з таким іменем не знайдено\n" +
+                                  "Створити нового користувача?\n" +
+                                  "1 - так\n" +
+                                  "0 - назад");
+                while (true)
+                {
+                    var key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.D1)
+                        return CreateNewUser(username);
+                    if (key.Key == ConsoleKey.D0)
+                        return null;
+                    else
+                        throw new ArgumentException("Error choice");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Введіть пароль в форматі [1-9][1-9][1-9][1-9]");
+                string password = Console.ReadLine();
+                 user = Users.SingleOrDefault
+                    (u => u.Name == username && u.Password == password);
+
+                if (user == null)
+                {
+                    Console.WriteLine("Пароль не співпадає\n" +
+                                      "1 - спробувати ще раз\n" +
+                                      "0 - вихід\n");
+                    var key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.D0)
+                        return null;
+                    if (key.Key == ConsoleKey.D1)
+                        return ExistingUserAutorization();
+                    else
+                        throw new ArgumentException("Error choice");
+                }
+                else
+                {
+                    Console.WriteLine("Ви успішно авторизовані");
+                    return user;
+                }
+            }
         }
 
-        private User CreateNewUser(string userName = null)
+        private User CreateNewUser(string username = null)
         {
-            if (userName == null)
+            if (username == null)
             {
                 Console.WriteLine("Введіть ім'я");
-                userName = Console.ReadLine();
+                username = Console.ReadLine();
             }
 
             Console.WriteLine("Введіть дату народження в форматі DD.MM.YYYY");
