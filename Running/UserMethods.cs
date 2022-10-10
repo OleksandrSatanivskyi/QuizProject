@@ -14,6 +14,7 @@ namespace QuizProject
                 Users = new List<User>();
                 return CreateNewUser(Users);
             }
+
             Console.WriteLine("Введіть ім'я користувача");
             string userName = Console.ReadLine();
             var user = Users?.SingleOrDefault(u => u.Name == userName);
