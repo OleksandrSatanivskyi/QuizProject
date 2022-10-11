@@ -33,8 +33,7 @@ namespace QuizProject.Running
                 PrepareScreen();
                 ShowMenu();
                 CommandInfo commandInfo = SelectCommandInfo();
-                if (commandInfo.Command == null 
-                    || commandInfo.Display() == false)
+                if (commandInfo.Command == null)
                     return;
                 commandInfo.Command();
                 AfterScreen();
