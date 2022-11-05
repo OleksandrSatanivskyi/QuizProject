@@ -1,18 +1,23 @@
-﻿using QuizProject.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace QuizProject.Running
+namespace QuizProject.Running.CommandInfos
 {
-    internal class TaskManager : CommandManager, IObjectManager<Task>
+    internal class TaskCommands : Commands, IObjectCommands<Task>
     {
-        public TaskManager(List<Section> Sections, List<Quiz> Quizzes, User currentUser)
+        public TaskCommands(CommandManager manager)
         {
-            this.Sections = Sections;
-            this.Quizzes = Quizzes;
-            CurrentUser = currentUser;
-            IniCommandsInfo();
+            CurrentManager = manager;
+            commandsInfo = new CommandInfo[] {
+                new CommandInfo("назад", Exit, AllwaysDisplay),
+                new CommandInfo("додати запитання", CreateObject, IfQuizzesNotEmpty),
+                new CommandInfo("видалити запитання", DeleteObject, IfQuizzesNotEmpty),
+                new CommandInfo("редагувати варіанти відповіді", EditAnswerOptions, IfQuizzesNotEmpty),
+                new CommandInfo("змінити кількість балів за запитання", EditScore, IfQuizzesNotEmpty)
+            };
         }
 
         public void CreateObject()
@@ -25,14 +30,14 @@ namespace QuizProject.Running
 
             Console.WriteLine("Введіть назву розділу, до якого належить вікторина");
             string sectionName = Console.ReadLine();
-            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+            var section = CurrentManager.Sections.SingleOrDefault(s => s.Name == sectionName);
 
-            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+            var quiz = CurrentManager.Quizzes.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
 
             if (quiz == null)
                 Console.WriteLine("Помилка");
-            else 
+            else
             {
                 Console.WriteLine("Введіть запитання");
                 string question = Console.ReadLine();
@@ -57,11 +62,11 @@ namespace QuizProject.Running
         {
             Console.WriteLine("Введіть назву розділу, до якого належить вікторина, до якої належить запитання");
             string sectionName = Console.ReadLine();
-            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+            var section = CurrentManager.Sections.SingleOrDefault(s => s.Name == sectionName);
 
             Console.WriteLine("Введіть назву вікторини, до якої належить запитання");
             string quizName = Console.ReadLine();
-            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+            var quiz = CurrentManager.Quizzes.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
 
             Console.WriteLine("Введіть назву запитання");
@@ -81,11 +86,11 @@ namespace QuizProject.Running
         {
             Console.WriteLine("Введіть назву розділу, до якого належить вікторина, до якої належить запитання");
             string sectionName = Console.ReadLine();
-            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+            var section = CurrentManager.Sections.SingleOrDefault(s => s.Name == sectionName);
 
             Console.WriteLine("Введіть назву вікторини, до якої належить запитання");
             string quizName = Console.ReadLine();
-            var quiz = Quizzes.SingleOrDefault(q => q.Name == quizName
+            var quiz = CurrentManager.Quizzes.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
 
             Console.WriteLine("Введіть назву запитання");
@@ -95,7 +100,7 @@ namespace QuizProject.Running
             return task;
         }
 
-        Task IObjectManager<Task>.GetObject()
+        Task IObjectCommands<Task>.GetObject()
             => this.GetObject();
 
         public void RenameObject()
@@ -110,17 +115,6 @@ namespace QuizProject.Running
                 task.Name = Console.ReadLine();
                 Console.WriteLine("Запитання було успішно переіменоване");
             }
-        }
-
-        protected override void IniCommandsInfo()
-        {
-            commandsInfo = new CommandInfo[] {
-                new CommandInfo("назад", null, AllwaysDisplay),
-                new CommandInfo("додати запитання", CreateObject, IfQuizzesNotEmpty),
-                new CommandInfo("видалити запитання", DeleteObject, IfQuizzesNotEmpty),
-                new CommandInfo("редагувати варіанти відповіді", EditAnswerOptions, IfQuizzesNotEmpty),
-                new CommandInfo("змінити кількість балів за запитання", EditScore, IfQuizzesNotEmpty)
-            };
         }
 
         private void EditScore()
@@ -162,13 +156,10 @@ namespace QuizProject.Running
 
         }
 
-        protected override void PrepareScreen()
-            => Console.Clear();
-
-        protected override void AfterScreen()
+        public override void Exit()
         {
-            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
-            Console.ReadKey();
+            CurrentManager.Commands = new DataCommands(CurrentManager);
+            CurrentManager.Run();
         }
     }
 }

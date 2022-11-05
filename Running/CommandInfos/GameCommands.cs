@@ -5,30 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizProject.Running
+namespace QuizProject.Running.CommandInfos
 {
-    internal class GameManager : CommandManager
+    internal class GameCommands: Commands
     {
-
-        public GameManager(DataContext dataContext, User currentUser)
+        public GameCommands(CommandManager manager) 
         {
-            Users = dataContext.dataSet.Users;
-            CurrentUser = currentUser;
-            Sections = dataContext.dataSet.Sections;
-            Quizzes = dataContext.dataSet.Quizzes;
-            IniCommandsInfo();
-        }
-
-        protected override void AfterScreen()
-        {
-            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
-            Console.ReadKey();
-        }
-
-        protected override void IniCommandsInfo()
-        {
+            CurrentManager = manager;
             commandsInfo = new CommandInfo[] {
-                new CommandInfo("назад", null, AllwaysDisplay),
+                new CommandInfo("назад", Exit, AllwaysDisplay),
                 new CommandInfo("Пройти вікторину", TakeQuiz, IfQuizzesNotEmpty),
                 new CommandInfo("Статистика за кількістю пройдених вікторин", CountOfTakenQuizStatistic, IfQuizzesNotEmpty),
                 new CommandInfo("Статистика за однією вікториною", QuizStatistic, IfQuizzesNotEmpty),
@@ -38,8 +23,8 @@ namespace QuizProject.Running
 
         private void CurrentUserStatistic()
         {
-            Console.WriteLine(CurrentUser.Name + ":");
-            foreach (var s in CurrentUser.Statistics)
+            Console.WriteLine(CurrentManager.CurrentUser.Name + ":");
+            foreach (var s in CurrentManager.CurrentUser.Statistics)
                 Console.WriteLine("\t" + s.Key + " - " + s.Value + "/" + s.Key.MaximumScores);
         }
 
@@ -52,8 +37,8 @@ namespace QuizProject.Running
             else
             {
                 var statistic = new Dictionary<User, int>();
-                foreach (var user in Users)
-                    if(user.Statistics.ContainsKey(quiz))
+                foreach (var user in CurrentManager.Users)
+                    if (user.Statistics.ContainsKey(quiz))
                         statistic.Add(user, user.Statistics[quiz]);
                 statistic = statistic.OrderByDescending(s => s.Value).ToDictionary(s => s.Key, s => s.Value);
 
@@ -67,15 +52,15 @@ namespace QuizProject.Running
             }
         }
 
-        private Quiz GetQuiz() 
+        private Quiz GetQuiz()
         {
             Console.WriteLine("Введіть назву розділу, до якого належить вікторина");
             string sectionName = Console.ReadLine();
-            var section = Sections.SingleOrDefault(s => s.Name == sectionName);
+            var section = CurrentManager.Sections.SingleOrDefault(s => s.Name == sectionName);
 
             Console.WriteLine("Введіть назву вікторини");
             string quizName = Console.ReadLine();
-            var quiz = Quizzes?.SingleOrDefault(q => q.Name == quizName
+            var quiz = CurrentManager.Quizzes?.SingleOrDefault(q => q.Name == quizName
                                               && q.Section == section);
             return quiz;
         }
@@ -85,7 +70,7 @@ namespace QuizProject.Running
             var usersStatistic = new Dictionary<User, int>();
             var takenQuizzes = new List<Quiz>();
 
-            foreach (var user in Users)
+            foreach (var user in CurrentManager.Users)
             {
                 foreach (var s in user.Statistics)
                     if (s.Value == s.Key.MaximumScores)
@@ -125,7 +110,7 @@ namespace QuizProject.Running
 
                     for (int i = 0; i < answerOptions.Count; i++)
                         Console.WriteLine("\t" + (i + 1) + " - " + answerOptions[i]);
-                    Console.WriteLine( "\t0 - вихід");
+                    Console.WriteLine("\t0 - вихід");
                     Console.Write("Ваша відповідь: ");
                     string key = Console.ReadLine();
                     if (int.Parse(key) - 1 >= 0 && int.Parse(key) <= answerOptions.Count)
@@ -146,11 +131,14 @@ namespace QuizProject.Running
                 Console.WriteLine("Вікторина пройдена");
                 Console.WriteLine($"Ваша кількість балів: {Count} з {quiz.MaximumScores}");
 
-                CurrentUser.Statistics.Add(quiz, Count);
+                CurrentManager.CurrentUser.Statistics.Add(quiz, Count);
             }
         }
-        
-        protected override void PrepareScreen()
-           => Console.Clear();
+
+        public override void Exit()
+        {
+            CurrentManager.Commands = new MainCommands(CurrentManager);
+            CurrentManager.Run();
+        }
     }
 }

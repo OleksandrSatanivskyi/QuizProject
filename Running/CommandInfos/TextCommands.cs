@@ -1,25 +1,19 @@
-﻿using QuizProject.Data;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace QuizProject.Running
+namespace QuizProject.Running.CommandInfos
 {
-    public class TextManager : CommandManager
+    internal class TextCommands : Commands
     {
-        public TextManager(DataContext dataContext, User currentUser) 
+        public TextCommands(CommandManager manager)
         {
-            Users = dataContext.dataSet.Users;
-            CurrentUser = currentUser;
-            Sections = dataContext.dataSet.Sections;
-            Quizzes = dataContext.dataSet.Quizzes;
-        }
-        private bool IfMoreThenOneQuiz()
-            =>IfQuizzesNotEmpty() && Quizzes.Count > 1; 
-        protected override void IniCommandsInfo()
-        {
+            CurrentManager = manager;
             commandsInfo = new CommandInfo[]
             {
-                new CommandInfo("до головного меню", null, AllwaysDisplay),
+                new CommandInfo("до головного меню", Exit, AllwaysDisplay),
                 new CommandInfo("статистика", Statistic, IfSectionsNotEmpty, true),
                 new CommandInfo("вивести дані про розділи", WriteSections, IfSectionsNotEmpty),
                 new CommandInfo("вивести дані про вікторини", WriteQuizzes, IfQuizzesNotEmpty),
@@ -28,10 +22,13 @@ namespace QuizProject.Running
                 new CommandInfo("відібрати вікторину за частиною назви...", FilterByNameFragment, IfMoreThenOneQuiz, true)
             };
         }
+        private bool IfMoreThenOneQuiz()
+           => IfQuizzesNotEmpty() && CurrentManager.Quizzes.Count > 1;
+
         private void FilterByNameFragment()
         {
             string substring = Entering.EnterString("Фрагмент назви");
-            var collection = Quizzes.Where(e => e.Name.IndexOf(substring,
+            var collection = CurrentManager.Quizzes.Where(e => e.Name.IndexOf(substring,
                 StringComparison.InvariantCultureIgnoreCase) >= 0);
             if (!collection.Any())
                 Console.WriteLine("Вікторина не знайдена");
@@ -39,22 +36,22 @@ namespace QuizProject.Running
                 Console.WriteLine(collection.ToLineList(""));
             Console.ReadKey();
         }
-       
+
         private void SortByParentName()
         {
-            Quizzes = Quizzes.OrderBy(e => e.Section.Name).ToList();
+            CurrentManager.Quizzes = CurrentManager.Quizzes.OrderBy(e => e.Section.Name).ToList();
             Console.WriteLine("Відсортовані вікторини:");
-            foreach (var quiz in Quizzes)
+            foreach (var quiz in CurrentManager.Quizzes)
             {
-                Console.WriteLine("\t"+quiz.Name);
+                Console.WriteLine("\t" + quiz.Name);
             }
         }
 
         private void SortByName()
         {
-            Quizzes = Quizzes.OrderBy(e => e.Name).ToList();
+            CurrentManager.Quizzes = CurrentManager.Quizzes.OrderBy(e => e.Name).ToList();
             Console.WriteLine("Відсортовані вікторини:");
-            foreach (var quiz in Quizzes)
+            foreach (var quiz in CurrentManager.Quizzes)
             {
                 Console.WriteLine("\t" + quiz.Name);
             }
@@ -62,10 +59,10 @@ namespace QuizProject.Running
 
         private void WriteQuizzes()
         {
-            foreach (var s in Sections)
+            foreach (var s in CurrentManager.Sections)
             {
                 Console.WriteLine(s);
-                var quizzes = Quizzes.Where(q => q.Section == s);
+                var quizzes = CurrentManager.Quizzes.Where(q => q.Section == s);
                 foreach (var q in quizzes)
                     Console.WriteLine("\t" + q);
             }
@@ -73,23 +70,26 @@ namespace QuizProject.Running
 
         private void WriteSections()
         {
-            Console.WriteLine(Sections.ToLineList<Section>("Розділи", "\n\t"));
+            string result = "";
+            foreach (var section in CurrentManager.Sections)
+            {
+                result+=section.ToString() + "\n";
+            }
+            //Console.WriteLine(CurrentManager.Sections.ToLineList<SectionCommands>("Розділи", "\n\t"));
         }
+
         private void Statistic()
         {
             Console.WriteLine("Статистика:");
-            Console.WriteLine($"\t{ "Розділів:", -10} {Sections.Count}");
-            Console.WriteLine($"\t{ "Вікторин:",-10} {Quizzes.Count}");
+            Console.WriteLine($"\t{ "Розділів:",-10} { CurrentManager.Sections.Count}");
+            Console.WriteLine($"\t{ "Вікторин:",-10} {CurrentManager.Quizzes.Count}");
         }
 
-        protected override void PrepareScreen()
+
+        public override void Exit()
         {
-            Console.Clear();
-        }
-        protected override void AfterScreen()
-        {
-            Console.WriteLine("Нажміть будь-яку клавішу щоб продовжити");
-            Console.ReadKey();
+            CurrentManager.Commands = new MainCommands(CurrentManager);
+            CurrentManager.Run();
         }
     }
 }
