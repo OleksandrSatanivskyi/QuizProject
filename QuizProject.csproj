@@ -65,7 +65,7 @@
     <Compile Include="Running\MainManager.cs" />
     <Compile Include="Data\Section.cs" />
     <Compile Include="Data\Task.cs" />
-    <Compile Include="Running\UserMethods.cs" />
+    <Compile Include="Running\UserCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
