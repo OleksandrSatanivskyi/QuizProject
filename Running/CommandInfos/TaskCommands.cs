@@ -42,12 +42,15 @@ namespace QuizProject.Running.CommandInfos
                 Console.WriteLine("Введіть запитання");
                 string question = Console.ReadLine();
 
+                Console.WriteLine("Введіть кількість варіантів відповідей на запитання");
+                int countOfAnswerOptions =Convert.ToInt32(Console.ReadLine());
+
                 Console.WriteLine("Введіть правильну відповідь");
                 string correctAnswer = Console.ReadLine();
 
-                Console.WriteLine("Введіть 3 хибних варіанти відповіді з нового рядка");
+                Console.WriteLine($"Введіть {countOfAnswerOptions - 1} хибних варіантів відповіді");
                 List<string> answerOptions = new List<string>();
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < countOfAnswerOptions - 1; i++)
                     answerOptions.Add(Console.ReadLine());
 
                 Console.WriteLine("Введіть кількість балів за запитання");
@@ -141,12 +144,15 @@ namespace QuizProject.Running.CommandInfos
                 Console.WriteLine("Помилка");
             else
             {
+                Console.WriteLine("Введіть кількість варіантів відповідей на запитання");
+                int countOfAnswerOptions = Convert.ToInt32(Console.ReadLine());
+
                 Console.WriteLine("Введіть правильну відповідь");
                 string correctAnswer = Console.ReadLine();
 
-                Console.WriteLine("Введіть 3 хибних варіанти відповіді з нового рядка");
+                Console.WriteLine($"Введіть {countOfAnswerOptions - 1} хибних варіантів відповіді");
                 List<string> answerOptions = new List<string>();
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < countOfAnswerOptions - 1; i++)
                     answerOptions.Add(Console.ReadLine());
 
                 task.CorrectAnswer = correctAnswer;

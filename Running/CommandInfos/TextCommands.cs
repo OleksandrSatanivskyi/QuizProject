@@ -75,7 +75,7 @@ namespace QuizProject.Running.CommandInfos
             {
                 result+=section.ToString() + "\n";
             }
-            //Console.WriteLine(CurrentManager.Sections.ToLineList<SectionCommands>("Розділи", "\n\t"));
+            Console.WriteLine(result);
         }
 
         private void Statistic()

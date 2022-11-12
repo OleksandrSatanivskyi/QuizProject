@@ -7,33 +7,18 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running
 {
-    internal class UserCreator
+    internal static class UserMethods
     {
-        public List<User> Users { get; set; }
-
-        public UserCreator(List<User> Users)
-        {
-            this.Users = Users;
-        }
-
-        public UserCreator() : this(new List<User>()) { }
-
-        public User CreateUser()
+        public static User SelectUser(List<User> Users)
         {
             if (Users == null || Users.Count <= 0)
             {
                 Users = new List<User>();
-                return CreateNewUser();
+                return CreateNewUser(Users);
             }
-            else
-                return ExistingUserAutorization();
-        }
-
-        private User ExistingUserAutorization()
-        {
             Console.WriteLine("Введіть ім'я користувача");
-            string username = Console.ReadLine();
-            var user = Users?.SingleOrDefault(u => u.Name == username);
+            string userName = Console.ReadLine();
+            var user = Users?.SingleOrDefault(u => u.Name == userName);
 
             if (user == null)
             {
@@ -45,48 +30,47 @@ namespace QuizProject.Running
                 {
                     var key = Console.ReadKey(true);
                     if (key.Key == ConsoleKey.D1)
-                        return CreateNewUser(username);
+                        return CreateNewUser(Users);
                     if (key.Key == ConsoleKey.D0)
                         return null;
                     else
-                        throw new ArgumentException("Error choice");
+                        throw new ArgumentNullException("Error");
                 }
             }
             else
-            {
-                Console.WriteLine("Введіть пароль в форматі [1-9][1-9][1-9][1-9]");
-                string password = Console.ReadLine();
-                 user = Users.SingleOrDefault
-                    (u => u.Name == username && u.Password == password);
+                return UserAuthorization(Users, userName);
+        }
 
-                if (user == null)
-                {
-                    Console.WriteLine("Пароль не співпадає\n" +
-                                      "1 - спробувати ще раз\n" +
-                                      "0 - вихід\n");
-                    var key = Console.ReadKey(true);
-                    if (key.Key == ConsoleKey.D0)
-                        return null;
-                    if (key.Key == ConsoleKey.D1)
-                        return ExistingUserAutorization();
-                    else
-                        throw new ArgumentException("Error choice");
-                }
+        private static User UserAuthorization(List<User> Users, string userName)
+        {
+            Console.WriteLine("Введіть пароль в форматі [1-9][1-9][1-9][1-9]");
+            string password = Console.ReadLine();
+            User user = Users.SingleOrDefault
+                (u => u.Name == userName && u.Password == password);
+
+            if (user == null)
+            {
+                Console.WriteLine("Пароль не співпадає\n" +
+                                  "1 - спробувати ще раз\n" +
+                                  "0 - вихід\n");
+                var key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.D0)
+                    return null;
                 else
-                {
-                    Console.WriteLine("Ви успішно авторизовані");
-                    return user;
-                }
+                    return UserAuthorization(Users, userName);
+            }
+            else
+            {
+                Console.WriteLine("Ви успішно авторизовані");
+                return user;
             }
         }
 
-        private User CreateNewUser(string username = null)
+        private static User CreateNewUser(List<User> Users)
         {
-            if (username == null)
-            {
-                Console.WriteLine("Введіть ім'я");
-                username = Console.ReadLine();
-            }
+            Console.WriteLine("Введіть ім'я");
+            string username = Console.ReadLine();
+
 
             Console.WriteLine("Введіть дату народження в форматі DD.MM.YYYY");
             DateTime birthDate = DateTime.Parse(Console.ReadLine());
