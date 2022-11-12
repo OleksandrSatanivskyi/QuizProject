@@ -1,4 +1,5 @@
 ﻿using QuizProject.Data;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace QuizProject.Running.CommandInfos
             commandsInfo = new CommandInfo[] {
                 new CommandInfo("назад", Exit, AllwaysDisplay),
                 new CommandInfo("Пройти вікторину", TakeQuiz, IfQuizzesNotEmpty),
-                new CommandInfo("Статистика за кількістю пройдених вікторин", CountOfTakenQuizStatistic, IfQuizzesNotEmpty),
+                new CommandInfo("Статистика за кількістю ідеально пройдених вікторин", CountOfTakenQuizStatistic, IfQuizzesNotEmpty),
                 new CommandInfo("Статистика за однією вікториною", QuizStatistic, IfQuizzesNotEmpty),
                 new CommandInfo("Статистика поточного користувача", CurrentUserStatistic, IfQuizzesNotEmpty),
             };
@@ -23,13 +24,17 @@ namespace QuizProject.Running.CommandInfos
 
         private void CurrentUserStatistic()
         {
-            Console.WriteLine(CurrentManager.CurrentUser.Name + ":");
+            Table statistic = new Table();
+            statistic.Title($"[yellow1]{CurrentManager.CurrentUser.Name}[/]");
+            statistic.AddColumns("Вікторина", "Бали", "Макс. бал");
             foreach (var s in CurrentManager.CurrentUser.Statistics)
-                Console.WriteLine("\t" + s.Key + " - " + s.Value + "/" + s.Key.MaximumScores);
+               statistic.AddRow($"[lightskyblue3_1]{s.Key}[/]", $"[lightskyblue3_1]{s.Value}[/]", $"[lightskyblue3_1]{s.Key.MaximumScores}[/]");
+            AnsiConsole.Write(statistic);
         }
 
         private void QuizStatistic()
         {
+
             var quiz = this.GetQuiz();
 
             if (quiz == null)
@@ -42,13 +47,16 @@ namespace QuizProject.Running.CommandInfos
                         statistic.Add(user, user.Statistics[quiz]);
                 statistic = statistic.OrderByDescending(s => s.Value).ToDictionary(s => s.Key, s => s.Value);
 
-                Console.WriteLine(quiz + ":");
+                Table result = new Table();
+                result.Title($"[yellow1]{quiz.Name}[/]");
+                result.AddColumns("Місце", "Користувач", "Бал");
                 int count = 1;
                 foreach (var s in statistic)
                 {
-                    Console.WriteLine("\t" + count + ": " + s.Key + " - " + s.Value);
+                    result.AddRow($"[lightskyblue3_1]{count}[/]", $"[lightskyblue3_1]{s.Key.Name}[/]", $"[lightskyblue3_1]{s.Value}[/]");
                     count++;
                 }
+                AnsiConsole.Write(result);
             }
         }
 
@@ -77,9 +85,17 @@ namespace QuizProject.Running.CommandInfos
                         takenQuizzes.Add(s.Key);
                 usersStatistic.Add(user, takenQuizzes.Count);
             }
+            usersStatistic = usersStatistic.OrderByDescending(s => s.Value).ToDictionary(s => s.Key, s => s.Value);
 
+            Table result = new Table();
+            result.AddColumns("Місце", "Користувач", "Кількість");
+            int count = 1;
             foreach (var s in usersStatistic)
-                Console.WriteLine(s.Key + " - " + s.Value);
+            {
+                result.AddRow($"[lightskyblue3_1]{count}[/]", $"[lightskyblue3_1]{s.Key.Name}[/]", $"[lightskyblue3_1]{s.Value}[/]");
+                count++;
+            }
+            AnsiConsole.Write(result);
         }
 
         private void TakeQuiz()
@@ -108,9 +124,13 @@ namespace QuizProject.Running.CommandInfos
                         answerOptions[i] = tmp;
                     }
 
+                    Table table = new Table();
+                    table.Title("[yellow1]Варіанти відповіді[/]");
+                    table.AddColumns("Номер", "Варіант");
                     for (int i = 0; i < answerOptions.Count; i++)
-                        Console.WriteLine("\t" + (i + 1) + " - " + answerOptions[i]);
-                    Console.WriteLine("\t0 - вихід");
+                        table.AddRow($"[white]{i + 1}[/]", $"[lightskyblue3_1]{answerOptions[i]}[/]");
+                    table.AddRow($"[white]0[/]", $"[lightskyblue3_1]вихід[/]");
+                    AnsiConsole.Write(table);
                     Console.Write("Ваша відповідь: ");
                     string key = Console.ReadLine();
                     if (int.Parse(key) - 1 >= 0 && int.Parse(key) <= answerOptions.Count)

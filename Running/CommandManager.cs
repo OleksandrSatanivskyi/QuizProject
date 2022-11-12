@@ -30,10 +30,10 @@ namespace QuizProject.Running
                 PrepareScreen();
                 ShowMenu();
                 CommandInfo commandInfo = SelectCommandInfo();
-                if (Commands == null)
-                    return;
                 if(commandInfo.Display() && Commands != null)
                     commandInfo.Command();
+                if (Commands == null)
+                    return;
                 AfterScreen();
             }
         }
@@ -41,6 +41,7 @@ namespace QuizProject.Running
         private void ShowMenu()
         {
             Table menu = new Table();
+            menu.BorderColor(Color.Purple_2);
             menu.Title("[yellow1]Список команд меню:[/]");
             menu.AddColumns("Номер", "Команда");
             for (int i = 0; i < Commands.commandsInfo.Length; i++)

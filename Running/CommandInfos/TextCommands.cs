@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace QuizProject.Running.CommandInfos
                 new CommandInfo("вивести дані про розділи", WriteSections, IfSectionsNotEmpty),
                 new CommandInfo("вивести дані про вікторини", WriteQuizzes, IfQuizzesNotEmpty),
                 new CommandInfo("сортувати вікторини за назвою", SortByName, IfMoreThenOneQuiz),
-                new CommandInfo("сортувати вікторини за розділом і підрозділом", SortByParentName, IfMoreThenOneQuiz),
+                new CommandInfo("сортувати вікторини за розділом", SortByParentName, IfMoreThenOneQuiz),
                 new CommandInfo("відібрати вікторину за частиною назви...", FilterByNameFragment, IfMoreThenOneQuiz, true)
             };
         }
@@ -59,23 +60,25 @@ namespace QuizProject.Running.CommandInfos
 
         private void WriteQuizzes()
         {
+            var result = new Tree("Вікторини");
+            result.Style = new Style(Color.Purple_2);
             foreach (var s in CurrentManager.Sections)
             {
-                Console.WriteLine(s);
+                var sectionNode = result.AddNode($"[paleturquoise1]{s.ToString()}[/]");
                 var quizzes = CurrentManager.Quizzes.Where(q => q.Section == s);
                 foreach (var q in quizzes)
-                    Console.WriteLine("\t" + q);
+                    sectionNode.AddNode($"[gold3_1]{q.ToString()}[/]");
             }
+            AnsiConsole.Write(result);
         }
 
         private void WriteSections()
         {
-            string result = "";
+            var sections = new Tree("Розділи");
+            sections.Style = new Style(Color.Purple_2);
             foreach (var section in CurrentManager.Sections)
-            {
-                result+=section.ToString() + "\n";
-            }
-            Console.WriteLine(result);
+                sections.AddNode($"[paleturquoise1]{section.ToString()}[/]");
+            AnsiConsole.Write(sections);
         }
 
         private void Statistic()
