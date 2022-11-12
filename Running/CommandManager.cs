@@ -1,5 +1,6 @@
 ﻿using QuizProject.Data;
 using QuizProject.Running.CommandInfos;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +40,17 @@ namespace QuizProject.Running
 
         private void ShowMenu()
         {
-            Console.WriteLine("Список команд меню:");
+            Table menu = new Table();
+            menu.Title("[yellow1]Список команд меню:[/]");
+            menu.AddColumns("Номер", "Команда");
             for (int i = 0; i < Commands.commandsInfo.Length; i++)
             {
                 if (Commands.commandsInfo[i].Display())
                 {
-                    Console.WriteLine($"{i} - {Commands.commandsInfo[i].Name}");
+                    menu.AddRow($"[white]{i}[/]", $"[lightskyblue3_1]{Commands.commandsInfo[i].Name}[/]");
                 }
             }
+            AnsiConsole.Write(menu);
         }
 
         protected CommandInfo SelectCommandInfo()
