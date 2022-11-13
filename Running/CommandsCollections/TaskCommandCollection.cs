@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running.CommandInfos
 {
-    internal class TaskCommands : Commands, IObjectCommands<Task>
+    internal class TaskCommandCollection : CommandCollection, IObjectCommandCollection<Task>
     {
-        public TaskCommands(CommandManager manager)
+        public TaskCommandCollection(CommandManager manager)
         {
             CurrentManager = manager;
             commandsInfo = new CommandInfo[] {
@@ -42,12 +42,15 @@ namespace QuizProject.Running.CommandInfos
                 Console.WriteLine("Введіть запитання");
                 string question = Console.ReadLine();
 
+                Console.WriteLine("Введіть кількість варіантів відповідей на запитання");
+                int countOfAnswerOptions =Convert.ToInt32(Console.ReadLine());
+
                 Console.WriteLine("Введіть правильну відповідь");
                 string correctAnswer = Console.ReadLine();
 
-                Console.WriteLine("Введіть 3 хибних варіанти відповіді з нового рядка");
+                Console.WriteLine($"Введіть {countOfAnswerOptions - 1} хибних варіантів відповіді");
                 List<string> answerOptions = new List<string>();
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < countOfAnswerOptions - 1; i++)
                     answerOptions.Add(Console.ReadLine());
 
                 Console.WriteLine("Введіть кількість балів за запитання");
@@ -100,7 +103,7 @@ namespace QuizProject.Running.CommandInfos
             return task;
         }
 
-        Task IObjectCommands<Task>.GetObject()
+        Task IObjectCommandCollection<Task>.GetObject()
             => this.GetObject();
 
         public void RenameObject()
@@ -141,12 +144,15 @@ namespace QuizProject.Running.CommandInfos
                 Console.WriteLine("Помилка");
             else
             {
+                Console.WriteLine("Введіть кількість варіантів відповідей на запитання");
+                int countOfAnswerOptions = Convert.ToInt32(Console.ReadLine());
+
                 Console.WriteLine("Введіть правильну відповідь");
                 string correctAnswer = Console.ReadLine();
 
-                Console.WriteLine("Введіть 3 хибних варіанти відповіді з нового рядка");
+                Console.WriteLine($"Введіть {countOfAnswerOptions - 1} хибних варіантів відповіді");
                 List<string> answerOptions = new List<string>();
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < countOfAnswerOptions - 1; i++)
                     answerOptions.Add(Console.ReadLine());
 
                 task.CorrectAnswer = correctAnswer;
@@ -158,7 +164,7 @@ namespace QuizProject.Running.CommandInfos
 
         public override void Exit()
         {
-            CurrentManager.Commands = new DataCommands(CurrentManager);
+            CurrentManager.Commands = new DataCommandCollection(CurrentManager);
             CurrentManager.Run();
         }
     }

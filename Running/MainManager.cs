@@ -11,7 +11,7 @@ namespace QuizProject.Running
         
         public MainManager()
         {
-            this.Commands = new MainCommands(this);
+            this.Commands = new MainCommandCollection(this);
         }
 
         protected override void PrepareScreen() 

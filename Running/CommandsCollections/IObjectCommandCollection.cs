@@ -2,7 +2,7 @@
 
 namespace QuizProject.Running
 {
-    public interface IObjectCommands<T>
+    public interface IObjectCommandCollection<T>
     {
         void CreateObject();
         T GetObject();

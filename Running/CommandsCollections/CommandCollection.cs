@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running.CommandInfos
 {
-    public abstract class Commands
+    public abstract class CommandCollection
     {
         public CommandManager CurrentManager { get; set; }
         public CommandInfo[] commandsInfo { get; set; }

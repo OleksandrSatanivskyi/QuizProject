@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running.CommandInfos
 {
-    internal class DataCommands : Commands
+    internal class DataCommandCollection : CommandCollection
     {
-        public DataCommands(CommandManager manager)
+        public DataCommandCollection(CommandManager manager)
         {
             CurrentManager = manager;
             commandsInfo = new CommandInfo[] {
@@ -21,25 +21,25 @@ namespace QuizProject.Running.CommandInfos
 
         private void EditTask()
         {
-            CurrentManager.Commands = new TaskCommands(CurrentManager);
+            CurrentManager.Commands = new TaskCommandCollection(CurrentManager);
             CurrentManager.Run();
         }
 
         private void EditSection()
         {
-            CurrentManager.Commands = new SectionCommands(CurrentManager);
+            CurrentManager.Commands = new SectionCommandCollection(CurrentManager);
             CurrentManager.Run();
         }
 
         private void EditQuiz()
         {
-            CurrentManager.Commands = new QuizCommands(CurrentManager);
+            CurrentManager.Commands = new QuizCommandCollection(CurrentManager);
             CurrentManager.Run();
         }
 
         public override void Exit()
         {
-            CurrentManager.Commands = new MainCommands(CurrentManager);
+            CurrentManager.Commands = new MainCommandCollection(CurrentManager);
             CurrentManager.Run();
         }
     }

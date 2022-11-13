@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running.CommandInfos
 {
-    internal class MainCommands : Commands
+    internal class MainCommandCollection : CommandCollection
     {
         public DataContext dataContext = new DataContext();
-        public MainCommands(CommandManager Manager) 
+        public MainCommandCollection(CommandManager Manager) 
         {
             dataContext.Load();
             CurrentManager = Manager;
@@ -34,12 +34,13 @@ namespace QuizProject.Running.CommandInfos
             => dataContext.dataSet.Sections.Any();
 
         private void TakingQuizzes()
-            => CurrentManager.Commands = new GameCommands(CurrentManager);
+            => CurrentManager.Commands = new GameCommandCollection(CurrentManager);
 
         private void SelectCurrentUser()
         {
             CurrentManager.Users = dataContext.dataSet.Users;
-            CurrentManager.CurrentUser = UserMethods.SelectUser(CurrentManager.Users);
+            UserCreator userCreator = new UserCreator(CurrentManager.Users);
+            CurrentManager.CurrentUser = userCreator.CreateUser();
             if (!CurrentManager.Users.Contains(CurrentManager.CurrentUser))
                 dataContext.dataSet.Users.Add(CurrentManager.CurrentUser);
         }
@@ -51,10 +52,10 @@ namespace QuizProject.Running.CommandInfos
         }
 
         private void EditData()
-            => CurrentManager.Commands = new DataCommands(CurrentManager);
+            => CurrentManager.Commands = new DataCommandCollection(CurrentManager);
 
         private void DataAsText()
-            => CurrentManager.Commands = new TextCommands(CurrentManager);
+            => CurrentManager.Commands = new TextCommandCollection(CurrentManager);
 
         private void CreateTestingdata()
             => dataContext.CreateTestingData();
