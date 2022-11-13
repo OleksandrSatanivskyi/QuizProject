@@ -14,7 +14,7 @@ namespace QuizProject.Running
         public List<User> Users { get; set; }
         public List<Section> Sections { get; set; }
         public List<Quiz> Quizzes { get; set; }
-        public Commands Commands { get; set; }
+        public CommandCollection Commands { get; set; }
 
         public CommandManager() {  }
 

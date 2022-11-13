@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running.CommandInfos
 {
-    internal class GameCommands: Commands
+    internal class GameCommandCollection: CommandCollection
     {
-        public GameCommands(CommandManager manager) 
+        public GameCommandCollection(CommandManager manager) 
         {
             CurrentManager = manager;
             commandsInfo = new CommandInfo[] {
@@ -34,7 +34,7 @@ namespace QuizProject.Running.CommandInfos
 
         private void QuizStatistic()
         {
-
+            WriteQuizzes();
             var quiz = this.GetQuiz();
 
             if (quiz == null)
@@ -100,6 +100,8 @@ namespace QuizProject.Running.CommandInfos
 
         private void TakeQuiz()
         {
+            WriteQuizzes();
+
             var quiz = this.GetQuiz();
 
             if (quiz == null)
@@ -133,7 +135,7 @@ namespace QuizProject.Running.CommandInfos
                     AnsiConsole.Write(table);
                     Console.Write("Ваша відповідь: ");
                     string key = Console.ReadLine();
-                    if (int.Parse(key) - 1 >= 0 && int.Parse(key) <= answerOptions.Count)
+                    if (int.Parse(key) >= 0 && int.Parse(key) <= answerOptions.Count)
                     {
                         if (int.Parse(key) == 0)
                             return;
@@ -157,8 +159,22 @@ namespace QuizProject.Running.CommandInfos
 
         public override void Exit()
         {
-            CurrentManager.Commands = new MainCommands(CurrentManager);
+            CurrentManager.Commands = new MainCommandCollection(CurrentManager);
             CurrentManager.Run();
+        }
+
+        private void WriteQuizzes()
+        {
+            var result = new Tree("Вікторини");
+            result.Style = new Style(Color.Purple_2);
+            foreach (var s in CurrentManager.Sections)
+            {
+                var sectionNode = result.AddNode($"[paleturquoise1]{s.ToString()}[/]\n");
+                var quizzes = CurrentManager.Quizzes.Where(q => q.Section == s);
+                foreach (var q in quizzes)
+                    sectionNode.AddNode($"[gold3_1]{q.ToString()}[/]\n");
+            }
+            AnsiConsole.Write(result);
         }
     }
 }

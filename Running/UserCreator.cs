@@ -37,10 +37,11 @@ namespace QuizProject.Running
 
             if (user == null)
             {
-                Console.WriteLine("Користувача з таким іменем не знайдено\n" +
-                                  "Створити нового користувача?\n" +
-                                  "1 - так\n" +
-                                  "0 - назад");
+                Console.WriteLine("Користувача з таким іменем не знайдено");
+                Console.WriteLine("Створити нового користувача?");
+                Console.WriteLine("1 - так");
+                Console.WriteLine("0 - назад");
+
                 while (true)
                 {
                     var key = Console.ReadKey(true);
@@ -61,9 +62,9 @@ namespace QuizProject.Running
 
                 if (user == null)
                 {
-                    Console.WriteLine("Пароль не співпадає\n" +
-                                      "1 - спробувати ще раз\n" +
-                                      "0 - вихід\n");
+                    Console.WriteLine("Пароль не співпадає");
+                    Console.WriteLine("1 - спробувати ще раз");
+                    Console.WriteLine("0 - вихід");
                     var key = Console.ReadKey(true);
                     if (key.Key == ConsoleKey.D0)
                         return null;

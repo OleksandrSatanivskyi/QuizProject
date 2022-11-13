@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running.CommandInfos
 {
-    internal class TaskCommands : Commands, IObjectCommands<Task>
+    internal class TaskCommandCollection : CommandCollection, IObjectCommandCollection<Task>
     {
-        public TaskCommands(CommandManager manager)
+        public TaskCommandCollection(CommandManager manager)
         {
             CurrentManager = manager;
             commandsInfo = new CommandInfo[] {
@@ -103,7 +103,7 @@ namespace QuizProject.Running.CommandInfos
             return task;
         }
 
-        Task IObjectCommands<Task>.GetObject()
+        Task IObjectCommandCollection<Task>.GetObject()
             => this.GetObject();
 
         public void RenameObject()
@@ -164,7 +164,7 @@ namespace QuizProject.Running.CommandInfos
 
         public override void Exit()
         {
-            CurrentManager.Commands = new DataCommands(CurrentManager);
+            CurrentManager.Commands = new DataCommandCollection(CurrentManager);
             CurrentManager.Run();
         }
     }

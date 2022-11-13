@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace QuizProject.Running.CommandInfos
 {
-    internal class TextCommands : Commands
+    internal class TextCommandCollection : CommandCollection
     {
-        public TextCommands(CommandManager manager)
+        public TextCommandCollection(CommandManager manager)
         {
             CurrentManager = manager;
             commandsInfo = new CommandInfo[]
@@ -64,10 +64,10 @@ namespace QuizProject.Running.CommandInfos
             result.Style = new Style(Color.Purple_2);
             foreach (var s in CurrentManager.Sections)
             {
-                var sectionNode = result.AddNode($"[paleturquoise1]{s.ToString()}[/]");
+                var sectionNode = result.AddNode($"[paleturquoise1]{s.ToString()}[/]\n");
                 var quizzes = CurrentManager.Quizzes.Where(q => q.Section == s);
                 foreach (var q in quizzes)
-                    sectionNode.AddNode($"[gold3_1]{q.ToString()}[/]");
+                    sectionNode.AddNode($"[gold3_1]{q.ToString()}[/]\n");
             }
             AnsiConsole.Write(result);
         }
@@ -77,7 +77,7 @@ namespace QuizProject.Running.CommandInfos
             var sections = new Tree("Розділи");
             sections.Style = new Style(Color.Purple_2);
             foreach (var section in CurrentManager.Sections)
-                sections.AddNode($"[paleturquoise1]{section.ToString()}[/]");
+                sections.AddNode($"[paleturquoise1]{section.ToString()}[/]\n");
             AnsiConsole.Write(sections);
         }
 
@@ -88,10 +88,9 @@ namespace QuizProject.Running.CommandInfos
             Console.WriteLine($"\t{ "Вікторин:",-10} {CurrentManager.Quizzes.Count}");
         }
 
-
         public override void Exit()
         {
-            CurrentManager.Commands = new MainCommands(CurrentManager);
+            CurrentManager.Commands = new MainCommandCollection(CurrentManager);
             CurrentManager.Run();
         }
     }
